@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sign Up / Sign In - My Two Minutes Food</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js"></script>
+  <style>
+    :root {
+      --primary-orange: #F97316;
+      --secondary-orange: #FB923C;
+      --danger-red: #DC2626;
+      --text-dark: #111827;
+      --text-light: #6B7280;
+      --border: #D1D5DB;
+      --white: #FFFFFF;
+      --card-background: rgba(255, 255, 255, 0.9);
+      --focus-ring: #F97316;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2) 20%, rgba(0, 0, 0, 0.2) 80%, rgba(0, 0, 0, 0.5)),
+                  url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      transition: opacity 0.5s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    body.fade-out {
+      opacity: 0;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: none;
+      border: none;
+      color: var(--primary-orange);
+      cursor: pointer;
+      z-index: 20;
+      padding: 0.5rem;
+      min-width: 44px;
+      min-height: 44px;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .back-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .back-btn:hover,
+    .back-btn:focus {
+      color: var(--secondary-orange);
+      transform: scale(1.1);
+      outline: 2px solid var(--focus-ring);
+      border-radius: 8px;
+    }
+
+    .container {
+      max-width: 360px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: var(--card-background);
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      fill: var(--primary-orange);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.75rem;
+      background: var(--white);
+      border: none;
+      color: var(--text-dark);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .tab-btn:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+
+    .tab-btn:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    .tab-btn.active {
+      background: var(--primary-orange);
+      color: var(--white);
+    }
+
+    .tab-btn:hover,
+    .tab-btn:focus {
+      background: var(--secondary-orange);
+      color: var(--white);
+      outline: 2px solid var(--focus-ring);
+    }
+
+    .tab-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0 0 1rem;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .input-group input::placeholder {
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary-orange);
+      color: var(--white);
+      border: none;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      min-height: 44px;
+    }
+
+    .auth-btn:hover,
+    .auth-btn:focus {
+      background: var(--secondary-orange);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      outline: 2px solid var(--focus-ring);
+    }
+
+    .auth-btn:active {
+      transform: scale(0.95);
+    }
+
+    .custom-alert {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card-background);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      color: var(--text-dark);
+      font-weight: 500;
+      text-align: center;
+      max-width: 90%;
+      width: 280px;
+      border: 1px solid var(--border);
+    }
+
+    .custom-alert.active {
+      display: block;
+    }
+
+    .custom-alert .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 20px;
+      height: 20px;
+      background: none;
+      border: none;
+      color: var(--primary-orange);
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .custom-alert .close-btn:hover,
+    .custom-alert .close-btn:focus {
+      color: var(--secondary-orange);
+      transform: scale(1.2);
+      outline: 2px solid var(--focus-ring);
+    }
+
+    .spinner-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spinner-overlay.active {
+      display: flex;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid transparent;
+      border-top: 4px solid var(--primary-orange);
+      border-right: 4px solid var(--secondary-orange);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 767px) {
+      .container {
+        max-width: 320px;
+        margin: 1.5rem 0.75rem;
+        padding: 1rem;
+      }
+      .logo {
+        width: 48px;
+        height: 48px;
+      }
+      .back-btn {
+        top: 0.75rem;
+        left: 0.75rem;
+        min-width: 40px;
+        min-height: 40px;
+      }
+      .back-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+      .tab-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        min-height: 40px;
+      }
+      .tab-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+      h1 {
+        font-size: 1.25rem;
+      }
+      .input-group input {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        border-radius: 10px;
+      }
+      .auth-btn {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        min-height: 40px;
+      }
+      .custom-alert {
+        width: 85%;
+        padding: 0.75rem;
+      }
+      .spinner {
+        width: 36px;
+        height: 36px;
+        border-width: 3px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="back-btn" id="back-btn" aria-label="Go back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  </button>
+
+  <div class="container">
+    <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z"/>
+    </svg>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="signup" aria-label="Switch to Sign Up tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+        Sign Up
+      </button>
+      <button class="tab-btn" data-tab="signin" aria-label="Switch to Sign In tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10z"/>
+        </svg>
+        Sign In
+      </button>
+    </div>
+    <div class="tab-content active" id="signup-tab">
+      <h1>Sign Up</h1>
+      <div class="input-group">
+        <input type="email" id="email-input" placeholder="Email" aria-label="Enter your email" autocomplete="email" />
+      </div>
+      <div class="input-group">
+        <input type="password" id="password-input" placeholder="Password" aria-label="Enter your password" autocomplete="new-password" />
+      </div>
+      <button class="auth-btn" id="signup-btn" aria-label="Sign up">Sign Up</button>
+    </div>
+    <div class="tab-content" id="signin-tab">
+      <h1>Sign In</h1>
+      <div class="input-group">
+        <input type="email" id="signin-email-input" placeholder="Email" aria-label="Enter your email" autocomplete="email" />
+      </div>
+      <div class="input-group">
+        <input type="password" id="signin-password-input" placeholder="Password" aria-label="Enter your password" autocomplete="current-password" />
+      </div>
+      <button class="auth-btn" id="signin-btn" aria-label="Sign in">Sign In</button>
+    </div>
+  </div>
+
+  <div id="custom-alert" class="custom-alert" role="alert" aria-hidden="true">
+    <button class="close-btn" aria-label="Close alert">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <p id="alert-message">An error occurred. Please try again.</p>
+  </div>
+
+  <div class="spinner-overlay" id="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import { getDatabase, ref, set, onDisconnect } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBOyZ3As4GTuNvjemvPF_SpsC6m6vqtNhc",
+      authDomain: "fire-b-a8878.firebaseapp.com",
+      databaseURL: "https://fire-b-a8878.firebaseio.com",
+      projectId: "fire-b-a8878",
+      storageBucket: "fire-b-a8878.firebasestorage.app",
+      messagingSenderId: "658673187627",
+      appId: "1:658673187627:web:6e4c29af661785f0afa36e",
+      measurementId: "G-V4W97VMSKL"
+    };
+
+    let app, auth, db;
+    try {
+      app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      db = getDatabase(app);
+      console.log("Firebase initialized successfully at", new Date().toLocaleString());
+    } catch (error) {
+      console.error("Firebase initialization failed:", error.code, error.message);
+      showAlert("Failed to connect to Firebase. Please check your network.", false);
+    }
+
+    const signupBtn = document.getElementById("signup-btn");
+    const signinBtn = document.getElementById("signin-btn");
+    const emailInput = document.getElementById("email-input");
+    const passwordInput = document.getElementById("password-input");
+    const signinEmailInput = document.getElementById("signin-email-input");
+    const signinPasswordInput = document.getElementById("signin-password-input");
+    const customAlert = document.getElementById("custom-alert");
+    const alertMessage = document.getElementById("alert-message");
+    const spinnerOverlay = document.getElementById("spinner-overlay");
+    const backBtn = document.getElementById("back-btn");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    function showSpinner() {
+      spinnerOverlay.classList.add("active");
+      console.log("Spinner shown at", new Date().toLocaleString());
+    }
+
+    function hideSpinner() {
+      spinnerOverlay.classList.remove("active");
+      console.log("Spinner hidden at", new Date().toLocaleString());
+    }
+
+    function showAlert(message, autoHide = true) {
+      alertMessage.textContent = message;
+      customAlert.classList.add("active");
+      customAlert.setAttribute("aria-hidden", "false");
+      console.log("Alert shown:", message);
+      if (autoHide) {
+        setTimeout(() => {
+          hideAlert();
+        }, 5000);
+      }
+    }
+
+    function hideAlert() {
+      customAlert.classList.remove("active");
+      customAlert.setAttribute("aria-hidden", "true");
+      console.log("Alert hidden");
+    }
+
+    document.querySelector(".custom-alert .close-btn").addEventListener("click", hideAlert);
+
+    function getReturnUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("returnUrl") || "index.html";
+    }
+
+    async function checkAuthState() {
+      showSpinner();
+      try {
+        await setPersistence(auth, browserLocalPersistence);
+        console.log("Persistence set to browserLocalPersistence");
+        return await new Promise((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            console.error("Authentication check timed out");
+            showAlert("Authentication timed out.", false);
+            reject(new Error("Authentication timed out"));
+          }, 10000);
+
+          onAuthStateChanged(auth, (user) => {
+            clearTimeout(timeout);
+            if (user) {
+              console.log("Authenticated user found, redirecting to", getReturnUrl());
+              document.body.classList.add("fade-out");
+              setTimeout(() => window.location.href = getReturnUrl(), 500);
+            } else {
+              console.log("No authenticated user, staying on signup page");
+              resolve();
+            }
+          }, (error) => {
+            clearTimeout(timeout);
+            console.error("Auth state error:", error.code, error.message);
+            showAlert(`Authentication failed: ${error.message}`, false);
+            reject(error);
+          });
+        });
+      } catch (error) {
+        console.error("Auth check failed:", error.code, error.message);
+        showAlert(`Failed to verify authentication: ${error.message}`, false);
+      } finally {
+        hideSpinner();
+      }
+    }
+
+    async function handleSignUp() {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!email || !password) {
+        showAlert("Please fill in all fields.", true);
+        return;
+      }
+
+      showSpinner();
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const userRef = ref(db, `users/${user.uid}`);
+        await set(userRef, {
+          email: user.email,
+          online: true
+        });
+
+        await onDisconnect(userRef).update({ online: false });
+
+        showAlert("Account created successfully!", true);
+        document.body.classList.add("fade-out");
+        setTimeout(() => window.location.href = getReturnUrl(), 500);
+      } catch (error) {
+        console.error("Sign up failed:", error.code, error.message);
+        let errorMessage = "Failed to sign up. Please try again.";
+        if (error.code === "auth/email-already-in-use") {
+          errorMessage = "Email is already in use.";
+        } else if (error.code === "auth/invalid-email") {
+          errorMessage = "Invalid email format.";
+        } else if (error.code === "auth/weak-password") {
+          errorMessage = "Password is too weak. Use at least 6 characters.";
+        }
+        showAlert(errorMessage, true);
+      } finally {
+        hideSpinner();
+      }
+    }
+
+    async function handleSignIn() {
+      const email = signinEmailInput.value.trim();
+      const password = signinPasswordInput.value.trim();
+
+      if (!email || !password) {
+        showAlert("Please fill in all fields.", true);
+        return;
+      }
+
+      showSpinner();
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const userRef = ref(db, `users/${user.uid}`);
+        await set(userRef, {
+          email: user.email,
+          online: true
+        });
+
+        await onDisconnect(userRef).update({ online: false });
+
+        showAlert("Signed in successfully!", true);
+        document.body.classList.add("fade-out");
+        setTimeout(() => window.location.href = getReturnUrl(), 500);
+      } catch (error) {
+        console.error("Sign in failed:", error.code, error.message);
+        let errorMessage = "Failed to sign in. Please try again.";
+        if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+          errorMessage = "Invalid email or password.";
+        } else if (error.code === "auth/invalid-email") {
+          errorMessage = "Invalid email format.";
+        }
+        showAlert(errorMessage, true);
+      } finally {
+        hideSpinner();
+      }
+    }
+
+    function setupTabListeners() {
+      tabButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          tabButtons.forEach(b => b.classList.remove("active"));
+          tabContents.forEach(c => c.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById(`${btn.dataset.tab}-tab`).classList.add("active");
+          console.log(`Switched to ${btn.dataset.tab} tab`);
+        });
+        btn.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            btn.click();
+          }
+        });
+      });
+    }
+
+    function setupAuthListeners() {
+      signupBtn.addEventListener("click", () => {
+        handleSignUp();
+        signupBtn.classList.add("tap-active");
+        setTimeout(() => signupBtn.classList.remove("tap-active"), 100);
+      });
+      emailInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSignUp();
+      });
+      passwordInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSignUp();
+      });
+
+      signinBtn.addEventListener("click", () => {
+        handleSignIn();
+        signinBtn.classList.add("tap-active");
+        setTimeout(() => signinBtn.classList.remove("tap-active"), 100);
+      });
+      signinEmailInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSignIn();
+      });
+      signinPasswordInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSignIn();
+      });
+
+      backBtn.addEventListener("click", () => {
+        document.body.classList.add("fade-out");
+        setTimeout(() => window.location.href = getReturnUrl(), 500);
+      });
+      backBtn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          backBtn.click();
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      console.log("DOMContentLoaded event fired at", new Date().toLocaleString());
+      try {
+        setupTabListeners();
+        setupAuthListeners();
+        await checkAuthState();
+      } catch (error) {
+        console.error("Error in DOMContentLoaded:", error);
+        showAlert("Failed to initialize app: " + error.message, false);
+        hideSpinner();
+      }
+    });
+  </script>
+</body>
+</html>
