@@ -17,18 +17,18 @@
             --color-accent-light: #ffa94d;
             --color-muted: rgba(255, 255, 255, 0.6);
             --color-muted-dark: rgba(255, 255, 255, 0.1);
-            
+           
             --font-display: 'Montserrat', sans-serif;
             --font-body: 'Open Sans', sans-serif;
-            
+           
             --transition-fast: 0.2s ease;
             --transition-medium: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             --transition-slow: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-        
+       
         html { scroll-behavior: smooth; font-size: 16px; }
-        
+       
         body {
             font-family: var(--font-body);
             background-color: var(--color-bg);
@@ -37,7 +37,7 @@
             overflow-x: hidden;
             cursor: none;
         }
-        
+       
         /* --- Custom Cursor --- */
         .cursor {
             width: 8px; height: 8px;
@@ -54,7 +54,6 @@
             transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
         }
         .cursor.hover { transform: scale(3); opacity: 0.5; }
-
         /* --- Grain & Background Effects --- */
         .grain-overlay {
             position: fixed; top:0; left:0; width:100%; height:100%;
@@ -67,7 +66,6 @@
             transform: translate(-50%, -50%);
             pointer-events: none; z-index: -1;
         }
-
         /* --- Navigation --- */
         .navigation {
             position: fixed; top:0; left:0; width:100%;
@@ -110,7 +108,6 @@
             cursor: pointer; transition: all 0.3s ease;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
         }
-
         /* --- Portfolio Hero --- */
         .portfolio-hero {
             position: relative;
@@ -125,7 +122,7 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background-image: linear-gradient(to bottom, rgba(11,11,11,0.65), rgba(11,11,11,0.9)), 
+            background-image: linear-gradient(to bottom, rgba(11,11,11,0.65), rgba(11,11,11,0.9)),
                               url('https://i.postimg.cc/WpmYNckK/Screenshot-2026-02-18-152539.png');
             background-size: cover;
             background-position: center;
@@ -153,7 +150,6 @@
             line-height: 0.95;
             text-transform: uppercase;
         }
-
         /* --- Filters (pill shape + animation) --- */
         .filters {
             padding: 4rem 4rem 2rem;
@@ -184,7 +180,6 @@
             color: var(--color-bg);
             transform: scale(1.06);
         }
-
         /* --- Portfolio Grid --- */
         .portfolio-grid {
             display: grid;
@@ -240,11 +235,9 @@
             font-weight: 800;
             line-height: 1.1;
         }
-
         /* --- Reveal --- */
         .reveal { opacity: 0; transform: translateY(60px); transition: all 1.2s cubic-bezier(0.25,1,0.5,1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-
         /* --- Modal --- */
         .modal {
             display: none;
@@ -285,7 +278,6 @@
             cursor: pointer;
             line-height: 1;
         }
-
         /* --- PROFESSIONAL FOOTER (only part changed) --- */
         footer {
             background: #050505;
@@ -354,7 +346,6 @@
             color: var(--color-muted);
             opacity: 0.7;
         }
-
         /* Mobile */
         .mobile-menu-btn { display: none; }
         @media (max-width: 1024px) {
@@ -377,7 +368,6 @@
     <div class="cursor-follower"></div>
     <div class="grain-overlay"></div>
     <div class="bg-glow"></div>
-
     <!-- Navigation -->
     <nav class="navigation">
         <a href="index.html" style="text-decoration: none;">
@@ -395,7 +385,6 @@
             <span></span><span></span><span></span>
         </button>
     </nav>
-
     <!-- Portfolio Hero -->
     <section class="portfolio-hero">
         <div class="hero-bg-image"></div>
@@ -407,7 +396,6 @@
             </p>
         </div>
     </section>
-
     <!-- Filters -->
     <div class="filters">
         <button class="filter-btn active" data-filter="all">All Projects</button>
@@ -415,83 +403,74 @@
         <button class="filter-btn" data-filter="signage">Large Format &amp; Signage</button>
         <button class="filter-btn" data-filter="ppe">PPE &amp; Apparel</button>
     </div>
-
     <!-- Portfolio Grid -->
     <div class="portfolio-grid" id="portfolioGrid">
-        
+       
         <!-- Project 1 -->
         <div class="portfolio-card reveal" data-category="signage" onclick="openModal(1)">
-            <img src="https://mksigns.com/cdn/shop/files/msdANilPKaf_1.png?v=1761281030&width=1946" alt="Mining Signage">
+            <img src="https://picsum.photos/seed/takedi-signage1/1200/750" alt="Mining Signage">
             <div class="portfolio-overlay">
                 <div class="category">Large Format &amp; Signage</div>
                 <h3>Mining Directional System</h3>
             </div>
         </div>
-
         <!-- Project 2 -->
         <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(2)">
-            <img src="https://i.postimg.cc/NGZc2HGz/car.png">
+            <img src="https://picsum.photos/seed/takedi-vehicle1/1200/750">
             <div class="portfolio-overlay">
                 <div class="category">Vehicle Branding</div>
                 <h3>PestPro Fleet Wrap</h3>
             </div>
         </div>
-
         <!-- Project 3 -->
         <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(3)">
-            <img src="https://www.protoolreviews.com/wp-content/uploads/2022/02/Milwaukee-Branded-PPE.jpg" alt="Branded PPE">
+            <img src="https://picsum.photos/seed/takedi-ppe1/1200/750" alt="Branded PPE">
             <div class="portfolio-overlay">
                 <div class="category">PPE &amp; Apparel</div>
                 <h3>Milwaukee Safety Range</h3>
             </div>
         </div>
-
         <!-- Project 4 -->
         <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(4)">
-            <img src="https://totallyyourstitch.com/cdn/shop/products/ladiespolologo.jpg?v=1720811173&width=1445" alt="Corporate Polos">
+            <img src="https://picsum.photos/seed/takedi-ppe2/1200/750" alt="Corporate Polos">
             <div class="portfolio-overlay">
                 <div class="category">PPE &amp; Apparel</div>
                 <h3>Corporate Polo Collection</h3>
             </div>
         </div>
-
         <!-- Project 5 -->
         <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(5)">
-            <img src="https://wraps.co.za/wp-content/uploads/2022/08/full-fleet-wrap-mining.jpg" alt="Mining Fleet">
+            <img src="https://picsum.photos/seed/takedi-vehicle2/1200/750" alt="Mining Fleet">
             <div class="portfolio-overlay">
                 <div class="category">Vehicle Branding</div>
                 <h3>Anglo American Fleet</h3>
             </div>
         </div>
-
         <!-- Project 6 -->
         <div class="portfolio-card reveal" data-category="signage" onclick="openModal(6)">
-            <img src="https://i.postimg.cc/htpZxkbx/signage.png">
+            <img src="https://picsum.photos/seed/takedi-signage2/1200/750" alt="Safety Signage">
             <div class="portfolio-overlay">
                 <div class="category">Large Format &amp; Signage</div>
                 <h3>Platinum Mine Hazard Boards</h3>
             </div>
         </div>
-
         <!-- Project 7 -->
         <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(7)">
-            <img src="https://i.postimg.cc/RhpqwVFR/wall.png" alt="Hi-Vis Apparel">
+            <img src="https://picsum.photos/seed/takedi-ppe3/1200/750" alt="Hi-Vis Apparel">
             <div class="portfolio-overlay">
                 <div class="category">PPE &amp; Apparel</div>
                 <h3>Full Hi-Vis Corporate Range</h3>
             </div>
         </div>
-
         <!-- Project 8 -->
         <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(8)">
-            <img src="https://i.postimg.cc/25gw7rq1/Screenshot-from-2026-02-18-16-19-18.png" alt="Heavy Haulage">
+            <img src="https://picsum.photos/seed/takedi-vehicle3/1200/750" alt="Heavy Haulage">
             <div class="portfolio-overlay">
-                <div class="category">Large Format &amp; Signage/div>
+                <div class="category">Vehicle Branding</div>
                 <h3>Heavy Haulage Tipper Fleet</h3>
             </div>
         </div>
     </div>
-
     <!-- Modal -->
     <div class="modal" id="projectModal">
         <div class="modal-content">
@@ -506,7 +485,6 @@
             </div>
         </div>
     </div>
-
     <!-- PROFESSIONAL FOOTER -->
     <footer>
         <div class="footer-inner">
@@ -516,7 +494,6 @@
                 <p>Modern Printers &amp; Supply</p>
                 <p>Premium industrial printing and branding solutions engineered for the mining, construction, and commercial sectors across South Africa.</p>
             </div>
-
             <!-- Quick Links -->
             <div class="footer-links">
                 <h4>Explore</h4>
@@ -528,7 +505,6 @@
                     <li><a href="index.html#contact">Contact</a></li>
                 </ul>
             </div>
-
             <!-- Contact -->
             <div class="footer-contact">
                 <h4>Contact Info</h4>
@@ -537,23 +513,20 @@
                 <p><a href="tel:+27607118356">060 711 8356</a></p>
             </div>
         </div>
-
         <div class="footer-bottom">
             © 2026 TAKEDI MODERN PRINTERS &amp; SUPPLY. All Rights Reserved.
         </div>
     </footer>
-
     <script>
         // Cursor Logic
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         let mouseX = 0, mouseY = 0, currX = 0, currY = 0, fX = 0, fY = 0;
-        
+       
         document.addEventListener('mousemove', e => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
-
         function updateCursor() {
             currX += (mouseX - currX) * 0.15;
             currY += (mouseY - currY) * 0.15;
@@ -564,37 +537,29 @@
             requestAnimationFrame(updateCursor);
         }
         updateCursor();
-
         document.querySelectorAll('a, button, .portfolio-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
-
         // Reveal Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
             });
         }, { threshold: 0.15 });
-
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
         // Nav Scroll
         window.addEventListener('scroll', () => {
             document.querySelector('.navigation').classList.toggle('scrolled', window.scrollY > 50);
         });
-
         // Portfolio Filter
         const filterBtns = document.querySelectorAll('.filter-btn');
         const cards = document.querySelectorAll('.portfolio-card');
-
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-
                 const filterValue = btn.getAttribute('data-filter');
-
                 cards.forEach(card => {
                     if (filterValue === 'all') {
                         card.style.display = 'block';
@@ -604,41 +569,33 @@
                 });
             });
         });
-
         // Modal
         let currentModal = 0;
-
         function openModal(id) {
             currentModal = id;
             const modal = document.getElementById('projectModal');
             const img = document.getElementById('modalImage');
             const titleEl = document.getElementById('modalTitle');
             const catEl = document.getElementById('modalCategory');
-
             const card = document.querySelector(`.portfolio-card[onclick="openModal(${id})"]`);
             const imgSrc = card.querySelector('img').src;
             const title = card.querySelector('h3').innerText;
             const cat = card.querySelector('.category').innerText;
-
             img.src = imgSrc;
             titleEl.innerText = title;
             catEl.innerText = cat;
-
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
             const modal = document.getElementById('projectModal');
             modal.style.display = 'none';
             document.body.style.overflow = 'visible';
         }
-
         // Close modal with ESC
         document.addEventListener('keydown', (e) => {
             if (e.key === "Escape") closeModal();
         });
-
         // Click outside modal to close
         document.getElementById('projectModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
