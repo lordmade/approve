@@ -154,7 +154,7 @@
             text-transform: uppercase;
         }
 
-        /* --- Filters --- */
+        /* --- Filters (UPDATED: pill shape + smooth animation) --- */
         .filters {
             padding: 4rem 4rem 2rem;
             background: #050505;
@@ -164,7 +164,7 @@
             flex-wrap: wrap;
         }
         .filter-btn {
-            padding: 0.85rem 2.2rem;
+            padding: 0.85rem 2.8rem;
             background: transparent;
             border: 1px solid var(--color-muted-dark);
             color: var(--color-fg);
@@ -174,13 +174,15 @@
             text-transform: uppercase;
             letter-spacing: 0.12em;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50px; /* pill shape */
         }
         .filter-btn.active,
         .filter-btn:hover {
             background: var(--color-accent);
             border-color: var(--color-accent);
             color: var(--color-bg);
+            transform: scale(1.06);
         }
 
         /* --- Portfolio Grid --- */
@@ -203,7 +205,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(80%);
+            filter: grayscale(50%); /* all images clearly visible */
             transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .portfolio-card:hover img {
