@@ -3,34 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Attendance Hub</title>
+    <title>Admin Registration | Attendance Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background: linear-gradient(135deg, #1e2937 0%, #334155 100%); }
-        .glass { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); }
+        body { background-color: #f3f4f6; }
+        .glass-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        .pill-btn { border-radius: 9999px; transition: all 0.3s ease; transform: scale(1); }
+        .pill-btn:hover { transform: translateY(-1px); filter: brightness(110%); }
+        .pill-btn:active { transform: scale(0.96); }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
-    <div class="glass w-full max-w-md mx-4 rounded-3xl shadow-2xl p-12 text-center">
-        <div class="mx-auto w-24 h-24 bg-indigo-600 text-white rounded-3xl flex items-center justify-center text-5xl mb-8">
-            <i class="fa-solid fa-shield-halved"></i>
+<body class="text-gray-800 flex items-center justify-center min-h-screen">
+    <div class="glass-card w-full max-w-md p-10">
+        <div class="text-center mb-8">
+            <img src="https://i.postimg.cc/05BVVkbb/LOGO-removebg-preview.png" alt="Logo" class="h-12 w-auto mx-auto mb-4">
+            <h1 class="text-3xl font-black text-gray-900">Admin Registration</h1>
+            <p class="text-gray-500 text-sm mt-2">Register a new admin account. Use your work email associated with Google.</p>
         </div>
-        <h1 class="text-4xl font-black tracking-tighter text-slate-900">Admin Portal</h1>
-        <p class="text-slate-500 mt-3 text-lg">Secure HR Command Center Access</p>
-
-        <button onclick="signInWithGoogle()" 
-                class="mt-12 w-full flex items-center justify-center gap-4 bg-white hover:bg-gray-50 border border-slate-300 font-semibold text-lg py-6 rounded-2xl shadow-lg transition-all">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" class="w-7 h-7" alt="Google">
-            Continue with Google
-        </button>
-
-        <p class="text-xs text-slate-400 mt-12">Only employees registered as **Admin** can enter</p>
+        <form id="adminRegForm" class="space-y-6">
+            <div>
+                <label class="block text-[10px] font-black text-gray-400 uppercase ml-2 mb-2">Full Name</label>
+                <input type="text" id="adminName" required placeholder="e.g. Jane Smith" class="w-full rounded-2xl border-gray-100 bg-gray-50 px-6 py-4 text-sm focus:ring-4 focus:ring-blue-500/10 outline-none border transition-all">
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-gray-400 uppercase ml-2 mb-2">Job Title / Role</label>
+                <input type="text" id="adminRole" required placeholder="e.g. HR Manager" class="w-full rounded-2xl border-gray-100 bg-gray-50 px-6 py-4 text-sm focus:ring-4 focus:ring-blue-500/10 outline-none border transition-all">
+            </div>
+            <div>
+                <label class="block text-[10px] font-black text-gray-400 uppercase ml-2 mb-2">Work Email (Google Account)</label>
+                <input type="email" id="adminEmail" required placeholder="admin@company.com" class="w-full rounded-2xl border-gray-100 bg-gray-50 px-6 py-4 text-sm focus:ring-4 focus:ring-blue-500/10 outline-none border transition-all">
+            </div>
+            <button type="submit" class="w-full pill-btn bg-blue-600 text-white font-black py-4 text-sm shadow-lg shadow-blue-500/20">REGISTER ADMIN</button>
+        </form>
+        <p class="text-center text-xs text-gray-400 mt-6">Already registered? <a href="path/to/dashboard.html" class="text-blue-600 font-bold">Login to Dashboard</a></p>
     </div>
-
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyAxBT0oESoL62oz_x_Z8cMtdENWZPx4tMI",
@@ -42,27 +56,32 @@
             appId: "1:708458917827:web:375de278577df0adcf9776"
         };
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
         const db = firebase.database();
-        const provider = new firebase.auth.GoogleAuthProvider();
 
-        function signInWithGoogle() {
-            auth.signInWithPopup(provider).then(async (result) => {
-                const user = result.user;
-                const snap = await db.ref('employees').orderByChild('email').equalTo(user.email.toLowerCase()).once('value');
-                let isAdmin = false;
-                snap.forEach(child => { if (child.val().isAdmin === true) isAdmin = true; });
+        document.getElementById('adminRegForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = `EMP-${Math.random().toString(16).slice(2, 6).toUpperCase()}`;
+            const name = document.getElementById('adminName').value.trim();
+            const role = document.getElementById('adminRole').value.trim();
+            const email = document.getElementById('adminEmail').value.trim().toLowerCase();
 
-                if (isAdmin) {
-                    window.location.href = "attendance-hub.html";
-                } else {
-                    await auth.signOut();
-                    alert("Access Denied\\n\\nThis Google account is not registered as an Admin.");
-                }
+            // Check if email already exists
+            const snap = await db.ref('employees').orderByChild('email').equalTo(email).once('value');
+            if (snap.exists()) {
+                alert('This email is already registered.');
+                return;
+            }
+
+            db.ref('employees/' + id).set({
+                id, name, role, email, isAdmin: true,
+                createdAt: firebase.database.ServerValue.TIMESTAMP
+            }).then(() => {
+                alert('Admin registered successfully! You can now login to the dashboard using Google sign-in with this email.');
+                document.getElementById('adminRegForm').reset();
             }).catch(err => {
-                alert("Sign-in failed: " + err.message);
+                alert('Registration failed: ' + err.message);
             });
-        }
+        });
     </script>
 </body>
 </html>
