@@ -73,22 +73,23 @@
        /* --- Navigation --- */
        .navigation {
            position: fixed; top:0; left:0; width:100%;
-           padding: 1.5rem 4rem;
+           padding: 1rem 4rem;
            display: flex; justify-content: space-between; align-items: center;
            z-index: 100;
            transition: all var(--transition-medium);
        }
        .navigation.scrolled {
-           padding: 1rem 4rem;
+           padding: 0.8rem 4rem;
            background: rgba(11, 11, 11, 0.8);
            backdrop-filter: blur(15px);
            border-bottom: 1px solid var(--color-muted-dark);
        }
 
-       .nav-logo {
-           display: flex; align-items: center;
-           font-family: var(--font-display); font-size: 1.6rem; font-weight: 800;
-           letter-spacing: -1px;
+       .nav-logo-img {
+           height: 50px;
+           width: auto;
+           display: block;
+           object-fit: contain;
        }
 
        .nav-links { display: flex; list-style: none; gap: 3rem; }
@@ -119,8 +120,8 @@
        }
        .hero-bg-image {
            position:absolute; top:0; left:0; width:100%; height:100%;
-           background-image: linear-gradient(to bottom, rgba(11,11,11,0.7), rgba(11,11,11,0.9)), 
-                             url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop');
+           background-image: linear-gradient(to bottom, rgba(11,11,11,0.6), rgba(11,11,11,0.9)), 
+                             url('https://i.postimg.cc/WpmYNckK/Screenshot-2026-02-18-152539.png');
            background-size:cover; background-position:center;
            z-index:0; transform: scale(1.1);
        }
@@ -252,7 +253,7 @@
        .mobile-menu-btn span { width:30px; height:2px; background:white; transition: 0.3s; }
        
        @media (max-width: 1024px) {
-           .navigation { padding: 1.5rem 2rem; }
+           .navigation { padding: 1rem 2rem; }
            .nav-links, .nav-cta { display: none; }
            .mobile-menu-btn { display: flex; }
            .contact-content { grid-template-columns: 1fr; }
@@ -268,7 +269,9 @@
    <div class="bg-glow"></div>
 
    <nav class="navigation">
-       <div class="nav-logo">TAKEDI</div>
+       <a href="#" style="text-decoration: none;">
+           <img src="https://i.postimg.cc/c44gvfv0/takedi-removebg-preview.png" alt="TAKEDI Logo" class="nav-logo-img">
+       </a>
        <ul class="nav-links">
            <li><a href="#services">Services</a></li>
            <li><a href="#portfolio">Portfolio</a></li>
@@ -336,7 +339,7 @@
                <span class="section-label">OUR STORY</span>
                <h2 class="section-title">Defining Professionalism</h2>
                <p style="font-size:1.2rem; color:var(--color-muted); max-width:600px;">
-                   Established by TAKEDI, we specialize in high-quality digital printing and branding solutions specifically engineered for the mining, industrial, and commercial sectors.
+                   We specialize in high-quality digital printing and branding solutions specifically engineered for the mining, industrial, and commercial sectors.
                </p>
            </div>
        </div>
