@@ -70,13 +70,13 @@
            pointer-events: none; z-index: -1;
        }
 
-       /* --- Navigation --- */
+       /* --- Navigation (Always Visible & Same Tab) --- */
        .navigation {
            position: fixed; top:0; left:0; width:100%;
-           padding: 1rem 4rem; /* Adjusted for consistent visibility */
+           padding: 1rem 4rem;
            display: flex; justify-content: space-between; align-items: center;
            z-index: 100;
-           background: rgba(11, 11, 11, 0.8);
+           background: rgba(11, 11, 11, 0.9);
            backdrop-filter: blur(15px);
            border-bottom: 1px solid var(--color-muted-dark);
            transition: all var(--transition-medium);
