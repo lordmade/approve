@@ -1,182 +1,191 @@
+<style>
+    /* New Contact-Specific Styles to match the rest of the site */
+    #contact {
+        background: radial-gradient(circle at bottom right, rgba(255,140,0,0.05) 0%, transparent 50%);
+    }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | TAKEDI Modern Printers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-bg: #0b0b0b;
-            --color-fg: #ffffff;
-            --color-accent: #ff8c00;
-            --color-muted: rgba(255, 255, 255, 0.6);
-            --color-glass: rgba(255, 255, 255, 0.03);
-            --font-display: 'Montserrat', sans-serif;
+    .contact-container-modern {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .contact-info-panel {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .info-card-modern {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--color-muted-dark);
+        padding: 2.5rem;
+        transition: all var(--transition-medium);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .info-card-modern::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 3px; height: 0;
+        background: var(--color-accent);
+        transition: height 0.4s ease;
+    }
+
+    .info-card-modern:hover {
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateX(10px);
+    }
+
+    .info-card-modern:hover::before {
+        height: 100%;
+    }
+
+    .info-card-modern h4 {
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        color: var(--color-accent);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .info-card-modern p {
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--color-fg);
+        line-height: 1.4;
+    }
+
+    .form-panel-modern {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--color-muted-dark);
+        padding: 4rem;
+    }
+
+    .modern-input-group {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .modern-input-group input, 
+    .modern-input-group textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--color-muted-dark);
+        padding: 1rem 0;
+        color: var(--color-fg);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .modern-input-group label {
+        position: absolute;
+        top: 1rem;
+        left: 0;
+        color: var(--color-muted);
+        pointer-events: none;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+    }
+
+    /* Floating label logic */
+    .modern-input-group input:focus ~ label,
+    .modern-input-group input:not(:placeholder-shown) ~ label,
+    .modern-input-group textarea:focus ~ label,
+    .modern-input-group textarea:not(:placeholder-shown) ~ label {
+        top: -10px;
+        font-size: 0.65rem;
+        color: var(--color-accent);
+    }
+
+    .modern-input-group input:focus, 
+    .modern-input-group textarea:focus {
+        outline: none;
+        border-bottom-color: var(--color-accent);
+    }
+
+    .submit-button-industrial {
+        width: 100%;
+        padding: 1.5rem;
+        background: var(--color-accent);
+        color: var(--color-bg);
+        border: none;
+        font-family: var(--font-display);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+    }
+
+    .submit-button-industrial:hover {
+        background: var(--color-fg);
+        letter-spacing: 0.4em;
+        transform: translateY(-3px);
+    }
+
+    @media (max-width: 1024px) {
+        .contact-container-modern {
+            grid-template-columns: 1fr;
         }
-
-        body {
-            margin: 0;
-            background-color: var(--color-bg);
-            color: var(--color-fg);
-            font-family: 'Open Sans', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+        .form-panel-modern {
+            padding: 2.5rem;
         }
+    }
+</style>
 
-        /* Ambient Background Glows */
-        .glow {
-            position: fixed;
-            width: 40vw;
-            height: 40vw;
-            background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, transparent 70%);
-            z-index: -1;
-            filter: blur(50px);
-        }
+<section id="contact">
+    <div class="reveal">
+        <span class="section-label">GET IN TOUCH</span>
+        <h2 class="section-title">Start Your Project</h2>
+    </div>
 
-        .contact-container {
-            width: 90%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background: var(--color-glass);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 4rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Left Side: Info */
-        .contact-info h1 {
-            font-family: var(--font-display);
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-        }
-
-        .info-card {
-            margin-bottom: 2.5rem;
-        }
-
-        .info-card h4 {
-            font-family: var(--font-display);
-            color: var(--color-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .info-card p {
-            font-size: 1.2rem;
-            color: var(--color-muted);
-            transition: color 0.3s;
-        }
-
-        .info-card:hover p {
-            color: var(--color-fg);
-        }
-
-        /* Right Side: Form */
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-group input, .input-group textarea {
-            width: 100%;
-            padding: 1.2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .input-group input:focus, .input-group textarea:focus {
-            outline: none;
-            border-color: var(--color-accent);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .submit-btn {
-            background: var(--color-accent);
-            color: #000;
-            padding: 1.2rem;
-            font-family: var(--font-display);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border: none;
-            cursor: pointer;
-            transition: 0.4s;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-        }
-
-        .submit-btn:hover {
-            letter-spacing: 0.2em;
-            background: #fff;
-        }
-
-        @media (max-width: 968px) {
-            .contact-container {
-                grid-template-columns: 1fr;
-                padding: 2rem;
-                margin: 2rem 0;
-            }
-            .contact-info h1 { font-size: 2.5rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="glow" style="top: -10%; right: -10%;"></div>
-    <div class="glow" style="bottom: -10%; left: -10%;"></div>
-
-    <div class="contact-container">
-        <div class="contact-info">
-            <h4 style="color: var(--color-accent); letter-spacing: 0.5em; margin-bottom: 1rem;">GET IN TOUCH</h4>
-            <h1>LET'S BUILD<br>YOUR BRAND</h1>
-            
-            <div class="info-card">
+    <div class="contact-container-modern">
+        <div class="contact-info-panel">
+            <div class="info-card-modern reveal">
                 <h4>Location</h4>
                 <p>15 Nelson Mandela Street,<br>Mokopane, LP</p>
             </div>
-
-            <div class="info-card">
-                <h4>Direct Contact</h4>
+            
+            <div class="info-card-modern reveal">
+                <h4>Email</h4>
                 <p>info@takedi.co.za</p>
+            </div>
+
+            <div class="info-card-modern reveal">
+                <h4>Support</h4>
                 <p>060 711 8356</p>
             </div>
         </div>
 
-        <form class="contact-form">
-            <div class="input-group">
-                <input type="text" placeholder="Full Name" required>
-            </div>
-            <div class="input-group">
-                <input type="email" placeholder="Email Address" required>
-            </div>
-            <div class="input-group">
-                <input type="text" placeholder="Subject (e.g. Vehicle Branding)">
-            </div>
-            <div class="input-group">
-                <textarea rows="5" placeholder="Tell us about your project..."></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Send Inquiry</button>
-        </form>
-    </div>
+        <div class="form-panel-modern reveal">
+            <form class="contact-form">
+                <div class="modern-input-group">
+                    <input type="text" id="name" placeholder=" " required>
+                    <label for="name">Full Name</label>
+                </div>
+                
+                <div class="modern-input-group">
+                    <input type="email" id="email" placeholder=" " required>
+                    <label for="email">Email Address</label>
+                </div>
+                
+                <div class="modern-input-group">
+                    <textarea id="message" rows="4" placeholder=" "></textarea>
+                    <label for="message">How can we help?</label>
+                </div>
 
-</body>
-</html>
+                <button type="submit" class="submit-button-industrial">Send Request</button>
+            </form>
+        </div>
+    </div>
+</section>
