@@ -1,214 +1,420 @@
-<style>
-    #contact {
-        padding: 10rem 4rem;
-        background: linear-gradient(to right, #0b0b0b 0%, #0f0f0f 100%);
-    }
-
-    .contact-grid-modern {
-        display: grid;
-        grid-template-columns: 0.8fr 1.2fr;
-        gap: 0;
-        border: 1px solid var(--color-muted-dark);
-        background: rgba(255, 255, 255, 0.02);
-        overflow: hidden;
-    }
-
-    /* Left Side: Brand Statement & Info */
-    .contact-brand-side {
-        background: #111;
-        padding: 4rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-right: 1px solid var(--color-muted-dark);
-        position: relative;
-    }
-
-    .contact-brand-side::after {
-        content: "TAKEDI";
-        position: absolute;
-        bottom: -20px;
-        right: -20px;
-        font-family: var(--font-display);
-        font-size: 8rem;
-        font-weight: 900;
-        color: rgba(255, 140, 0, 0.03);
-        z-index: 0;
-        pointer-events: none;
-    }
-
-    .contact-info-block {
-        margin-bottom: 3rem;
-        z-index: 1;
-    }
-
-    .info-label {
-        font-family: var(--font-display);
-        font-size: 0.7rem;
-        color: var(--color-accent);
-        letter-spacing: 0.4em;
-        text-transform: uppercase;
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-    .info-value {
-        font-size: 1.1rem;
-        color: var(--color-fg);
-        font-weight: 500;
-        line-height: 1.5;
-    }
-
-    /* Right Side: Modern Form */
-    .contact-form-side {
-        padding: 4rem;
-        background: rgba(255, 255, 255, 0.01);
-        backdrop-filter: blur(10px);
-    }
-
-    .modern-form {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-    }
-
-    .full-width { grid-column: span 2; }
-
-    .input-wrapper {
-        position: relative;
-        border-bottom: 1px solid var(--color-muted-dark);
-        transition: border-color 0.4s ease;
-    }
-
-    .input-wrapper:focus-within {
-        border-color: var(--color-accent);
-    }
-
-    .input-wrapper input, 
-    .input-wrapper textarea {
-        width: 100%;
-        padding: 1.5rem 0 0.5rem 0;
-        background: transparent;
-        border: none;
-        color: var(--color-fg);
-        font-family: var(--font-body);
-        font-size: 1rem;
-        outline: none;
-    }
-
-    .input-wrapper label {
-        position: absolute;
-        top: 1.5rem;
-        left: 0;
-        color: var(--color-muted);
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        letter-spacing: 0.15em;
-        font-family: var(--font-display);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        pointer-events: none;
-    }
-
-    /* Floating Label Logic */
-    .input-wrapper input:focus + label,
-    .input-wrapper input:not(:placeholder-shown) + label,
-    .input-wrapper textarea:focus + label,
-    .input-wrapper textarea:not(:placeholder-shown) + label {
-        top: 0;
-        font-size: 0.6rem;
-        color: var(--color-accent);
-    }
-
-    .submit-container {
-        margin-top: 3rem;
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-    }
-
-    .modern-submit-btn {
-        background: var(--color-accent);
-        color: var(--color-bg);
-        border: none;
-        padding: 1.2rem 3rem;
-        font-family: var(--font-display);
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-    }
-
-    .modern-submit-btn:hover {
-        background: var(--color-fg);
-        transform: translateY(-5px);
-    }
-
-    .form-note {
-        font-size: 0.75rem;
-        color: var(--color-muted);
-        max-width: 200px;
-        line-height: 1.4;
-    }
-
-    @media (max-width: 1024px) {
-        .contact-grid-modern { grid-template-columns: 1fr; }
-        .modern-form { grid-template-columns: 1fr; }
-        .full-width { grid-column: span 1; }
-        #contact { padding: 6rem 2rem; }
-    }
-</style>
-
-<section id="contact">
-    <div class="reveal">
-        <span class="section-label">CONNECT</span>
-        <h2 class="section-title">Let's Print the<br><span style="color:var(--color-accent)">Future Together</span></h2>
-    </div>
-
-    <div class="contact-grid-modern reveal">
-        <div class="contact-brand-side">
-            <div>
-                <div class="contact-info-block">
-                    <span class="info-label">Headquarters</span>
-                    <p class="info-value">15 Nelson Mandela Street,<br>Mokopane, LP</p>
-                </div>
-                <div class="contact-info-block">
-                    <span class="info-label">Email Inquiries</span>
-                    <p class="info-value">info@takedi.co.za</p>
-                </div>
-                <div class="contact-info-block">
-                    <span class="info-label">Phone Support</span>
-                    <p class="info-value">060 711 8356</p>
-                </div>
-            </div>
-            
-            <div style="z-index: 1;">
-                <span class="info-label">Hours</span>
-                <p class="info-value" style="font-size: 0.9rem;">Mon — Fri: 08:00 - 17:00</p>
-            </div>
-        </div>
-
-        <div class="contact-form-side">
-            <form class="modern-form">
-                <div class="input-wrapper">
-                    <input type="text" id="name" placeholder=" " required>
-                    <label for="name">Full Name</label>
-                </div>
-                <div class="input-wrapper">
-                    <input type="email" id="email" placeholder=" " required>
-                    <label for="email">Email Address</label>
-                </div>
-                <div class="input-wrapper full-width">
-                    <textarea id="message" rows="4" placeholder=" " required></textarea>
-                    <label for="message">Project Details</label>
-                </div>
-                
-                <div class="submit-container full-width">
-                    <button type="submit" class="modern-submit-btn">Send Request</button>
-                    <p class="form-note">Our team typically responds within 24 business hours.</p>
-                </div>
-            </form>
-        </div>
-    </div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Contact TAKEDI | Modern Printers & Supply</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <base target="_blank">
+   <style>
+       :root {
+           --color-bg: #0b0b0b;
+           --color-fg: #ffffff;
+           --color-accent: #ff8c00;
+           --color-accent-dark: #e67e00;
+           --color-accent-light: #ffa94d;
+           --color-muted: rgba(255, 255, 255, 0.6);
+           --color-muted-dark: rgba(255, 255, 255, 0.1);
+        
+           --font-display: 'Montserrat', sans-serif;
+           --font-body: 'Open Sans', sans-serif;
+        
+           --transition-fast: 0.2s ease;
+           --transition-medium: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+           --transition-slow: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+       }
+       *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+      
+       html { scroll-behavior: smooth; font-size: 16px; }
+      
+       body {
+           font-family: var(--font-body);
+           background-color: var(--color-bg);
+           color: var(--color-fg);
+           line-height: 1.6;
+           overflow-x: hidden;
+           cursor: none;
+       }
+       /* --- Custom Cursor --- */
+       .cursor {
+           width: 8px; height: 8px;
+           background: var(--color-accent);
+           border-radius: 50%;
+           position: fixed; pointer-events: none; z-index: 9999;
+           transition: transform 0.1s ease;
+       }
+       .cursor-follower {
+           width: 40px; height: 40px;
+           border: 1px solid var(--color-accent);
+           border-radius: 50%;
+           position: fixed; pointer-events: none; z-index: 9998;
+           transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+       }
+       .cursor.hover { transform: scale(3); opacity: 0.5; }
+       /* --- Grain & Background Effects --- */
+       .grain-overlay {
+           position: fixed; top:0; left:0; width:100%; height:100%;
+           pointer-events: none; z-index: 9990; opacity: 0.03;
+           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+       }
+       .bg-glow {
+           position: fixed; top: 50%; left: 50%; width: 60vw; height: 60vw;
+           background: radial-gradient(circle, rgba(255,140,0,0.08) 0%, rgba(0,0,0,0) 70%);
+           transform: translate(-50%, -50%);
+           pointer-events: none; z-index: -1;
+       }
+       /* --- Navigation --- */
+       .navigation {
+           position: fixed; top:0; left:0; width:100%;
+           padding: 1.5rem 4rem;
+           display: flex; justify-content: space-between; align-items: center;
+           z-index: 100;
+           transition: all var(--transition-medium);
+       }
+       .navigation.scrolled {
+           padding: 1rem 4rem;
+           background: rgba(11, 11, 11, 0.8);
+           backdrop-filter: blur(15px);
+           border-bottom: 1px solid var(--color-muted-dark);
+       }
+       .nav-logo-text {
+           font-family: var(--font-display);
+           font-size: 1.8rem;
+           font-weight: 900;
+           letter-spacing: 0.05em;
+           color: var(--color-fg);
+           text-transform: uppercase;
+           line-height: 1;
+       }
+       .nav-links { display: flex; list-style: none; gap: 3rem; }
+       .nav-links a {
+           font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
+           text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-fg);
+           text-decoration: none; position: relative;
+       }
+       .nav-links a::after {
+           content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px;
+           background: var(--color-accent); transition: width 0.3s ease;
+       }
+       .nav-links a:hover::after { width: 100%; }
+       .nav-links a.active::after { width: 100%; }
+       .nav-links a.active { color: var(--color-accent); }
+       .nav-cta {
+           font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+           text-transform: uppercase; letter-spacing: 0.1em;
+           padding: 0.8rem 1.8rem; background: var(--color-accent);
+           border: none; color: var(--color-bg);
+           cursor: pointer; transition: all 0.3s ease;
+           clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+       }
+       /* --- Hero Section --- */
+       .hero {
+           position:relative; height:100vh; width:100%; overflow:hidden;
+           display:flex; align-items:center; justify-content:center;
+       }
+       .hero-bg-image {
+           position:absolute; top:0; left:0; width:100%; height:100%;
+           background-image: linear-gradient(to bottom, rgba(11,11,11,0.6), rgba(11,11,11,0.9)),
+                             url('https://www.dtflinko.com/wp-content/uploads/2024/07/LINKO_DTF_printer_production_workshop.webp');
+           background-size:cover; background-position:center;
+           z-index:0; transform: scale(1.1);
+       }
+       .hero-content {
+           position:relative; z-index:2; text-align:center;
+           display: flex; flex-direction: column; align-items: center;
+       }
+      
+       .hero-typing-container {
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           gap: 0.5rem;
+       }
+      
+       .hero-title-typing {
+           font-family: var(--font-display);
+           font-size: clamp(3rem, 12vw, 8rem);
+           font-weight: 900;
+           letter-spacing: -0.02em;
+           line-height: 0.9;
+           margin: 0;
+           text-transform: uppercase;
+           color: var(--color-fg);
+           white-space: nowrap;
+           overflow: hidden;
+           border-right: 6px solid var(--color-accent);
+           width: 0;
+       }
+       .line-1 {
+           animation: heroType 1.5s steps(10, end) forwards, heroBlink 0.8s infinite;
+       }
+       .line-2 {
+           animation: heroType 1.5s steps(10, end) forwards 1.5s, heroBlink 0.8s infinite;
+       }
+       @keyframes heroType {
+           from { width: 0; }
+           to { width: 100%; }
+       }
+       @keyframes heroBlink {
+           from, to { border-color: transparent; }
+           50% { border-color: var(--color-accent); }
+       }
+       .hero-subtitle {
+           font-family:var(--font-body); font-size:1.1rem; font-weight:400;
+           letter-spacing:0.4em; text-transform:uppercase; color:var(--color-accent);
+           margin-top:2.5rem; display:block;
+           opacity: 0; transform: translateY(20px);
+           animation: fadeUp 1s ease forwards 3s;
+       }
+       @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+       .hero-cta {
+           display:inline-block; margin-top:3rem; padding:1.2rem 3.5rem;
+           font-family:var(--font-display); font-size:0.9rem; font-weight:700;
+           text-transform:uppercase; letter-spacing:0.2em; color:var(--color-fg);
+           text-decoration:none; border: 1px solid var(--color-fg);
+           transition:all 0.4s ease;
+           opacity: 0; animation: fadeUp 1s ease forwards 3.5s;
+       }
+       .hero-cta:hover { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
+       /* --- Reveal Animation --- */
+       .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
+       .reveal.active { opacity: 1; transform: translateY(0); }
+       /* --- Sections --- */
+       section { position:relative; padding:10rem 4rem; }
+       .section-label {
+           color: var(--color-accent); font-weight: 700; letter-spacing: 0.4em;
+           font-size: 0.75rem; display: block; margin-bottom: 1rem;
+       }
+       .section-title {
+           font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem);
+           font-weight: 800; line-height: 1.1; margin-bottom: 4rem;
+       }
+       /* --- Services --- */
+       .services-grid {
+           display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;
+       }
+       .service-card {
+           background: rgba(255,255,255,0.03);
+           backdrop-filter: blur(10px);
+           border: 1px solid var(--color-muted-dark);
+           padding: 3rem; transition: all 0.4s ease;
+       }
+       .service-card:hover {
+           background: rgba(255,140,0,0.05);
+           border-color: var(--color-accent);
+           transform: translateY(-10px);
+       }
+       .service-icon { font-size: 3rem; margin-bottom: 2rem; display: block; }
+       .service-title { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 1rem; }
+       .service-desc { color: var(--color-muted); }
+       .service-link { color: var(--color-accent); text-decoration: none; font-weight: 600; }
+       .service-link:hover { color: var(--color-accent-light); }
+       /* --- Contact Form --- */
+       .contact-content { display:grid; grid-template-columns: 1.2fr 0.8fr; gap:5rem; }
+       .contact-form input, .contact-form textarea {
+           width:100%; padding:1.5rem; background: transparent;
+           border: none; border-bottom: 1px solid var(--color-muted-dark);
+           color:var(--color-fg); margin-bottom: 1.5rem; transition: 0.3s;
+       }
+       .contact-form input:focus, .contact-form textarea:focus { border-color: var(--color-accent); outline: none; }
+       .submit-btn {
+           background: var(--color-accent); color: var(--color-bg);
+           border:none; padding:1.2rem 4rem; font-family:var(--font-display);
+           font-weight:700; text-transform:uppercase; cursor:pointer;
+       }
+       /* --- WHATSAPP FLOATING BUTTON --- */
+       .whatsapp-float {
+           position: fixed;
+           bottom: 30px;
+           right: 30px;
+           width: 65px;
+           height: 65px;
+           background: #25D366;
+           color: white;
+           border-radius: 50%;
+           text-align: center;
+           font-size: 40px;
+           box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+           z-index: 9999;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           transition: all 0.3s ease;
+       }
+       .whatsapp-float:hover {
+           transform: scale(1.1);
+           background: #20b058;
+           box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+       }
+       /* --- Mobile Menu --- */
+       .mobile-menu-btn { display:none; flex-direction:column; gap:6px; background:none; border:none; cursor:pointer; }
+       .mobile-menu-btn span { width:30px; height:2px; background:white; transition: 0.3s; }
+      
+       @media (max-width: 1024px) {
+           .navigation { padding: 1rem 2rem; }
+           .nav-links, .nav-cta { display: none; }
+           .mobile-menu-btn { display: flex; }
+           .contact-content { grid-template-columns: 1fr; }
+           section { padding: 6rem 2rem; }
+           .hero-title-typing { border-right: 3px solid var(--color-accent); }
+       }
+       @media (max-width: 768px) {
+           .whatsapp-float {
+               width: 55px;
+               height: 55px;
+               font-size: 34px;
+               bottom: 20px;
+               right: 20px;
+           }
+       }
+   </style>
+</head>
+<body>
+   <div class="cursor"></div>
+   <div class="cursor-follower"></div>
+   <div class="grain-overlay"></div>
+   <div class="bg-glow"></div>
+   <nav class="navigation">
+       <a href="index.html" style="text-decoration: none;">
+           <span class="nav-logo-text">TAKEDI</span>
+       </a>
+       <ul class="nav-links">
+           <li><a href="index.html">Home</a></li>
+           <li><a href="about.html">About</a></li>
+           <li><a href="services.html">Services</a></li>
+           <li><a href="contact.html" class="active">Contact</a></li>
+       </ul>
+       <button class="nav-cta">Get Quote</button>
+       <button class="mobile-menu-btn">
+           <span></span><span></span><span></span>
+       </button>
+   </nav>
+   <section class="hero">
+       <div class="hero-bg-image"></div>
+       <div class="hero-content">
+           <div class="hero-typing-container">
+               <h1 class="hero-title-typing line-1">CONTACT</h1>
+               <h1 class="hero-title-typing line-2">US</h1>
+           </div>
+           <span class="hero-subtitle">We're Here For You</span>
+           <a href="#contact" class="hero-cta">Reach Out Today</a>
+       </div>
+   </section>
+   <section id="contact-info">
+       <div class="reveal">
+           <span class="section-label">GET IN TOUCH</span>
+           <h2 class="section-title">Reach Out Today<br><span style="color:var(--color-accent)">Let's Bring Your Vision To Life</span></h2>
+       </div>
+       <div class="services-grid">
+           <div class="service-card reveal">
+               <span class="service-icon"><i class="fas fa-phone-volume"></i></span>
+               <h3 class="service-title">Call Us</h3>
+               <p class="service-desc"><a class="service-link" href="tel:+27607118356">060 711 8356</a></p>
+               <p class="service-desc"><a class="service-link" href="tel:+27150040179">015 004 0179</a></p>
+               <p class="service-desc" style="margin-top: 20px; font-size: 15px;">
+                   Mon–Fri: 08:00 – 17:00<br>
+                   Saturday: 09:00 – 13:00
+               </p>
+           </div>
+           <div class="service-card reveal">
+               <span class="service-icon"><i class="fas fa-envelope"></i></span>
+               <h3 class="service-title">Email</h3>
+               <p class="service-desc"><a class="service-link" href="mailto:info@takedi.co.za">info@takedi.co.za</a></p>
+               <p class="service-desc" style="margin-top: 20px;">
+                   For quotes, urgent orders,<br>
+                   design questions or general enquiries.
+               </p>
+               <p class="service-desc" style="margin-top: 16px; font-size: 15px; color: #777;">
+                   We usually reply within 1–2 hours during business hours.
+               </p>
+           </div>
+           <div class="service-card reveal">
+               <span class="service-icon"><i class="fas fa-map-marker-alt"></i></span>
+               <h3 class="service-title">Visit Us</h3>
+               <p class="service-desc">15 Nelson Mandela Street<br>Mokopane, Limpopo<br>South Africa</p>
+               <p class="service-desc" style="margin-top: 24px;">
+                   <a class="service-link" href="https://maps.google.com/?q=15+Nelson+Mandela+Street,+Mokopane" rel="noopener">
+                       Get Directions →
+                   </a>
+               </p>
+           </div>
+       </div>
+   </section>
+   <section id="contact" style="background:#050505;">
+       <div class="contact-content">
+           <div class="reveal">
+               <span class="section-label">SEND US A MESSAGE</span>
+               <h2 class="section-title">Start Your Project</h2>
+               <form class="contact-form" action="mailto:info@takedi.co.za" method="post" enctype="text/plain">
+                   <input type="text" id="name" name="name" placeholder="Your Name" required>
+                   <input type="email" id="email" name="email" placeholder="Email Address" required>
+                   <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                   <textarea rows="4" id="message" name="message" placeholder="Your Message" required></textarea>
+                   <button type="submit" class="submit-btn">Send Message</button>
+               </form>
+           </div>
+           <div class="reveal" style="display:flex; flex-direction:column; gap:2rem; justify-content:center;">
+               <div>
+                   <strong style="color:var(--color-accent); text-transform:uppercase; letter-spacing:0.1em;">Location</strong><br>
+                   15 Nelson Mandela Street, Mokopane
+               </div>
+               <div>
+                   <strong style="color:var(--color-accent); text-transform:uppercase; letter-spacing:0.1em;">Contact</strong><br>
+                   info@takedi.co.za<br>
+                   060 711 8356
+               </div>
+           </div>
+       </div>
+   </section>
+   <footer style="padding:4rem 2rem; text-align:center; opacity: 0.5; font-size: 0.8rem; border-top: 1px solid var(--color-muted-dark);">
+       © 2026 TAKEDI MODERN PRINTERS & SUPPLY.
+   </footer>
+   <a href="https://wa.me/27607118356?text=Hi%20TAKEDI%2C%20I%27d%20like%20to%20discuss%20a%20printing%20or%20branding%20project..."
+      class="whatsapp-float" target="_blank" rel="noopener">
+       <i class="fab fa-whatsapp"></i>
+   </a>
+   <script>
+       // --- Cursor Logic ---
+       const cursor = document.querySelector('.cursor');
+       const follower = document.querySelector('.cursor-follower');
+       let mouseX = 0, mouseY = 0, currX = 0, currY = 0, fX = 0, fY = 0;
+       document.addEventListener('mousemove', e => {
+           mouseX = e.clientX; mouseY = e.clientY;
+       });
+       function updateCursor() {
+           currX += (mouseX - currX) * 0.15;
+           currY += (mouseY - currY) * 0.15;
+           fX += (mouseX - fX) * 0.1;
+           fY += (mouseY - fY) * 0.1;
+           cursor.style.transform = `translate3d(${currX}px, ${currY}px, 0)`;
+           follower.style.transform = `translate3d(${fX - 16}px, ${fY - 16}px, 0)`;
+           requestAnimationFrame(updateCursor);
+       }
+       updateCursor();
+       document.querySelectorAll('a, button').forEach(el => {
+           el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+           el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+       });
+       // --- Reveal Animation ---
+       const observerOptions = { threshold: 0.15 };
+       const observer = new IntersectionObserver((entries) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) entry.target.classList.add('active');
+           });
+       }, observerOptions);
+       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+       // --- Nav Scroll ---
+       window.addEventListener('scroll', () => {
+           document.querySelector('.navigation').classList.toggle('scrolled', window.scrollY > 50);
+       });
+       // --- Parallax Hero ---
+       window.addEventListener('scroll', () => {
+           const scrolled = window.scrollY;
+           document.querySelector('.hero-bg-image').style.transform = `scale(${1.1 + scrolled/5000}) translateY(${scrolled * 0.3}px)`;
+       });
+   </script>
+</body>
+</html>
