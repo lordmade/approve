@@ -108,7 +108,7 @@
 
         /* --- Hero Section --- */
         .hero {
-            position:relative; height:70vh; width:100%; overflow:hidden;
+            position:relative; height:60vh; width:100%; overflow:hidden;
             display:flex; align-items:center; justify-content:center;
         }
         .hero-bg-image {
@@ -156,44 +156,37 @@
             font-weight: 800; line-height: 1.1; margin-bottom: 3rem;
         }
 
-        /* --- Values Grid --- */
-        .values-grid {
-            display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;
+        /* --- Organogram/Team Grid --- */
+        .team-grid {
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:2rem;
         }
-        .value-card {
+        .team-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--color-muted-dark);
-            padding: 3rem; transition: all 0.4s ease;
+            padding: 2.5rem; text-align: center;
         }
-        .value-card:hover {
-            border-color: var(--color-accent);
-            transform: translateY(-10px);
-            background: rgba(255,140,0,0.05);
-        }
-        .value-number { 
-            font-family: var(--font-display); 
-            font-size: 1rem; color: var(--color-accent); 
-            margin-bottom: 1rem; display: block; font-weight: 800;
-        }
+        .team-role { color: var(--color-accent); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .team-name { font-family: var(--font-display); font-size: 1.2rem; margin-top: 0.5rem; }
 
         /* --- About Content --- */
         .about-split {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
-            align-items: center;
+            align-items: flex-start;
         }
-        .about-text p {
-            font-size: 1.1rem;
-            color: var(--color-muted);
-            margin-bottom: 2rem;
+        .about-text p { font-size: 1.1rem; color: var(--color-muted); margin-bottom: 1.5rem; }
+
+        .mission-vision {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem;
         }
+        .mv-box { padding: 2rem; border-left: 2px solid var(--color-accent); background: rgba(255,140,0,0.02); }
 
         @media (max-width: 1024px) {
             .navigation { padding: 1rem 2rem; }
             .nav-links { display: none; }
             section { padding: 6rem 2rem; }
-            .about-split { grid-template-columns: 1fr; }
+            .about-split, .mission-vision { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -213,13 +206,14 @@
             <li><a href="about.html">About</a></li>
             <li><a href="index.html#contact">Contact</a></li>
         </ul>
-        <div style="width: 100px;"></div> </nav>
+        <div style="width: 100px;"></div>
+    </nav>
 
     <section class="hero">
         <div class="hero-bg-image"></div>
         <div class="hero-content">
-            <h1 class="hero-title-typing">OUR STORY</h1>
-            <span style="letter-spacing: 0.5em; text-transform: uppercase; font-size: 0.8rem; margin-top: 2rem; color: var(--color-accent);">Precision & Excellence</span>
+            <h1 class="hero-title-typing">ABOUT US</h1>
+            <span style="letter-spacing: 0.5em; text-transform: uppercase; font-size: 0.8rem; margin-top: 2rem; color: var(--color-accent);">Monkwe Koketso Groups (Pty) Ltd</span>
         </div>
     </section>
 
@@ -227,35 +221,79 @@
         <div class="about-split">
             <div class="reveal">
                 <span class="section-label">WHO WE ARE</span>
-                <h2 class="section-title">Driven by Quality,<br>Defined by <span style="color:var(--color-accent)">Results</span></h2>
+                <h2 class="section-title">Leading Digital <br><span style="color:var(--color-accent)">Printing Solutions</span></h2>
+                <div class="about-text">
+                    <p>Monkwe Koketso Groups (Pty) Ltd is a leading digital printing company specializing in high-quality printing solutions for businesses, organizations, and individuals[cite: 244]. Founded in 2022 by Monkwe Koketso, our vision has always been to provide innovative solutions that combine quality, speed, and affordability[cite: 247].</p>
+                    <p>Over the years, we have grown and evolved, investing in the latest technology to exceed customer expectations with every project[cite: 245, 248].</p>
+                </div>
             </div>
-            <div class="about-text reveal">
-                <p>Based in Mokopane, TAKEDI Modern Printers & Supply has established itself as a leader in industrial branding. We understand that in the mining and commercial sectors, durability is just as important as design.</p>
-                <p>Our mission is to provide high-impact visual solutions that withstand the toughest environments while elevating your brand's professional presence.</p>
+            <div class="reveal" style="display:flex; flex-direction:column; gap:2rem;">
+                <div class="mv-box">
+                    <strong class="team-role">Our Mission</strong>
+                    <p style="margin-top:0.5rem; color:var(--color-muted);">To deliver fast, reliable, and cost-effective digital printing services that meet the evolving needs of our customers, while maintaining the highest standards of quality[cite: 259].</p>
+                </div>
+                <div class="mv-box" style="border-color: #fff;">
+                    <strong class="team-role" style="color:#fff;">Our Vision</strong>
+                    <p style="margin-top:0.5rem; color:var(--color-muted);">To be the leading digital printing company in the industry, recognized for our exceptional quality, innovative solutions, and commitment to sustainability[cite: 261].</p>
+                </div>
             </div>
         </div>
     </section>
 
     <section style="background:#050505;">
         <div class="reveal">
-            <span class="section-label">OUR CORE VALUES</span>
-            <h2 class="section-title">The Takedi Standard</h2>
+            <span class="section-label">OUR ORGANOGRAM</span>
+            <h2 class="section-title">Leadership & Team</h2>
         </div>
-        <div class="values-grid">
-            <div class="value-card reveal">
-                <span class="value-number">01</span>
-                <h3 class="nav-logo-text" style="font-size: 1.2rem; margin-bottom: 1rem;">Innovation</h3>
-                <p style="color: var(--color-muted);">Utilizing the latest in digital printing technology to provide sharper, more vibrant, and longer-lasting results.</p>
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <span class="team-role">Director</span>
+                <h3 class="team-name">Monkwe Koketso [cite: 250]</h3>
             </div>
-            <div class="value-card reveal">
-                <span class="value-number">02</span>
-                <h3 class="nav-logo-text" style="font-size: 1.2rem; margin-bottom: 1rem;">Integrity</h3>
-                <p style="color: var(--color-muted);">We believe in transparent pricing and SABS-standard quality in every piece of PPE and signage we deliver.</p>
+            <div class="team-card reveal">
+                <span class="team-role">Receptionist</span>
+                <h3 class="team-name">Moshi Mapula [cite: 251]</h3>
             </div>
-            <div class="value-card reveal">
-                <span class="value-number">03</span>
-                <h3 class="nav-logo-text" style="font-size: 1.2rem; margin-bottom: 1rem;">Impact</h3>
-                <p style="color: var(--color-muted);">Our goal is to ensure your brand stands out, whether it's on a high-visibility vest or a 10-meter billboard.</p>
+            <div class="team-card reveal">
+                <span class="team-role">Designer</span>
+                <h3 class="team-name">Monkwe Koketso [cite: 252]</h3>
+            </div>
+            <div class="team-card reveal">
+                <span class="team-role">Applicator</span>
+                <h3 class="team-name">Seshoka Johannes [cite: 253]</h3>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="reveal">
+            <span class="section-label">OUR VALUES</span>
+            <h2 class="section-title">The Foundation of Takedi</h2>
+        </div>
+        <div class="team-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <div class="reveal">
+                <h4 style="color:var(--color-accent); margin-bottom:0.5rem;">Customer Focus</h4>
+                <p style="color:var(--color-muted); font-size:0.9rem;">We prioritize our customers' needs and strive to exceed their expectations[cite: 263].</p>
+            </div>
+            <div class="reveal">
+                <h4 style="color:var(--color-accent); margin-bottom:0.5rem;">Quality Excellence</h4>
+                <p style="color:var(--color-muted); font-size:0.9rem;">We are committed to delivering high-quality products that meet the highest standards[cite: 264].</p>
+            </div>
+            <div class="reveal">
+                <h4 style="color:var(--color-accent); margin-bottom:0.5rem;">Innovation</h4>
+                <p style="color:var(--color-muted); font-size:0.9rem;">We encourage creativity and continuous improvement in all aspects of our business[cite: 265].</p>
+            </div>
+            <div class="reveal">
+                <h4 style="color:var(--color-accent); margin-bottom:0.5rem;">Sustainability</h4>
+                <p style="color:var(--color-muted); font-size:0.9rem;">We prioritize environmental sustainability and strive to minimize our ecological footprint[cite: 266].</p>
+            </div>
+            <div class="reveal">
+                <h4 style="color:var(--color-accent); margin-bottom:0.5rem;">Integrity</h4>
+                <p style="color:var(--color-muted); font-size:0.9rem;">We operate with transparency and honesty in all our interactions[cite: 267].</p>
+            </div>
+            <div class="reveal">
+                <h4 style="color:var(--color-accent); margin-bottom:0.5rem;">Teamwork</h4>
+                <p style="color:var(--color-muted); font-size:0.9rem;">We foster a collaborative environment that values diversity and open communication[cite: 268].</p>
             </div>
         </div>
     </section>
@@ -265,7 +303,6 @@
     </footer>
 
     <script>
-        // --- Cursor Logic ---
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         let mouseX = 0, mouseY = 0, currX = 0, currY = 0, fX = 0, fY = 0;
@@ -290,7 +327,6 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
 
-        // --- Reveal Animation ---
         const observerOptions = { threshold: 0.15 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -300,17 +336,8 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // --- Nav Scroll ---
         window.addEventListener('scroll', () => {
             document.querySelector('.navigation').classList.toggle('scrolled', window.scrollY > 50);
-        });
-
-        // --- Parallax Hero ---
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            if(document.querySelector('.hero-bg-image')) {
-                document.querySelector('.hero-bg-image').style.transform = `scale(${1.1 + scrolled/5000}) translateY(${scrolled * 0.3}px)`;
-            }
         });
     </script>
 </body>
