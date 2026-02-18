@@ -7,7 +7,7 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-   <base target="_blank">
+   
    <style>
        :root {
            --color-bg: #0b0b0b;
@@ -73,16 +73,13 @@
        /* --- Navigation --- */
        .navigation {
            position: fixed; top:0; left:0; width:100%;
-           padding: 1.5rem 4rem;
+           padding: 1rem 4rem; /* Adjusted for consistent visibility */
            display: flex; justify-content: space-between; align-items: center;
            z-index: 100;
-           transition: all var(--transition-medium);
-       }
-       .navigation.scrolled {
-           padding: 1rem 4rem;
            background: rgba(11, 11, 11, 0.8);
            backdrop-filter: blur(15px);
            border-bottom: 1px solid var(--color-muted-dark);
+           transition: all var(--transition-medium);
        }
 
        .nav-logo-text {
@@ -413,11 +410,6 @@
        }, observerOptions);
 
        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-       // --- Nav Scroll ---
-       window.addEventListener('scroll', () => {
-           document.querySelector('.navigation').classList.toggle('scrolled', window.scrollY > 50);
-       });
 
        // --- Parallax Hero ---
        window.addEventListener('scroll', () => {
