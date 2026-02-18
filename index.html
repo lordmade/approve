@@ -10,25 +10,26 @@
    <base target="_blank">
    <style>
        :root {
-           --color-bg: #000000;
+           --color-bg: #0b0b0b;
            --color-fg: #ffffff;
            --color-accent: #ff8c00;
            --color-accent-dark: #e67e00;
            --color-accent-light: #ffa94d;
            --color-muted: rgba(255, 255, 255, 0.6);
-           --color-muted-dark: rgba(255, 255, 255, 0.3);
+           --color-muted-dark: rgba(255, 255, 255, 0.1);
          
            --font-display: 'Montserrat', sans-serif;
            --font-body: 'Open Sans', sans-serif;
          
            --transition-fast: 0.2s ease;
-           --transition-medium: 0.4s ease;
-           --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-         
-           --grid-gap: 2px;
+           --transition-medium: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+           --transition-slow: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
        }
+
        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+       
        html { scroll-behavior: smooth; font-size: 16px; }
+       
        body {
            font-family: var(--font-body);
            background-color: var(--color-bg);
@@ -37,12 +38,13 @@
            overflow-x: hidden;
            cursor: none;
        }
+
+       /* --- Custom Cursor --- */
        .cursor {
            width: 8px; height: 8px;
            background: var(--color-accent);
            border-radius: 50%;
            position: fixed; pointer-events: none; z-index: 9999;
-           mix-blend-mode: difference;
            transition: transform 0.1s ease;
        }
        .cursor-follower {
@@ -52,232 +54,189 @@
            position: fixed; pointer-events: none; z-index: 9998;
            transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
        }
-       .cursor.hover { transform: scale(2); }
-       .cursor-follower.hover { width: 60px; height: 60px; border-color: var(--color-fg); }
-       @media (pointer: coarse) {
-           body { cursor: auto; }
-           .cursor, .cursor-follower { display: none; }
-       }
+       .cursor.hover { transform: scale(3); opacity: 0.5; }
+
+       /* --- Grain & Background Effects --- */
        .grain-overlay {
            position: fixed; top:0; left:0; width:100%; height:100%;
-           pointer-events: none; z-index: 9990; opacity: 0.04;
+           pointer-events: none; z-index: 9990; opacity: 0.03;
            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
        }
-       ::selection { background: var(--color-accent); color: var(--color-bg); }
-       ::-webkit-scrollbar { width: 8px; }
-       ::-webkit-scrollbar-track { background: var(--color-bg); }
-       ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 4px; }
-       ::-webkit-scrollbar-thumb:hover { background: var(--color-accent-light); }
+
+       .bg-glow {
+           position: fixed; top: 50%; left: 50%; width: 60vw; height: 60vw;
+           background: radial-gradient(circle, rgba(255,140,0,0.08) 0%, rgba(0,0,0,0) 70%);
+           transform: translate(-50%, -50%);
+           pointer-events: none; z-index: -1;
+       }
+
+       /* --- Navigation --- */
        .navigation {
            position: fixed; top:0; left:0; width:100%;
-           padding: 1.5rem 3rem;
+           padding: 1.5rem 4rem;
            display: flex; justify-content: space-between; align-items: center;
            z-index: 100;
-           transition: background var(--transition-medium), backdrop-filter var(--transition-medium);
+           transition: all var(--transition-medium);
        }
        .navigation.scrolled {
-           background: rgba(0,0,0,0.85);
-           backdrop-filter: blur(10px);
+           padding: 1rem 4rem;
+           background: rgba(11, 11, 11, 0.8);
+           backdrop-filter: blur(15px);
+           border-bottom: 1px solid var(--color-muted-dark);
        }
+
+       /* Typing Effect for Logo */
        .nav-logo {
-           display: flex; align-items: baseline;
+           display: flex; align-items: center;
+           font-family: var(--font-display); font-size: 1.6rem; font-weight: 800;
        }
-       .logo-main { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; }
-       .logo-accent { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--color-accent); }
-       .nav-links {
-           display: flex; list-style: none; gap: 2.5rem;
+       .logo-main {
+           display: inline-block;
+           overflow: hidden;
+           white-space: nowrap;
+           border-right: 3px solid var(--color-accent);
+           width: 0;
+           animation: typing 2.5s steps(6, end) forwards, blink 0.8s infinite;
        }
+       @keyframes typing { from { width: 0 } to { width: 100% } }
+       @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--color-accent) } }
+
+       .nav-links { display: flex; list-style: none; gap: 3rem; }
        .nav-links a {
-           font-family: var(--font-display); font-size: 0.875rem; font-weight: 500;
-           text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-fg);
-           text-decoration: none; position: relative; padding: 0.5rem 0;
+           font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
+           text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-fg);
+           text-decoration: none; position: relative;
        }
        .nav-links a::after {
-           content:''; position:absolute; bottom:0; left:0; width:0; height:1px;
-           background: var(--color-accent); transition: width var(--transition-medium);
+           content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px;
+           background: var(--color-accent); transition: width 0.3s ease;
        }
        .nav-links a:hover::after { width: 100%; }
+
        .nav-cta {
-           font-family: var(--font-display); font-size: 0.875rem; font-weight: 600;
+           font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
            text-transform: uppercase; letter-spacing: 0.1em;
-           padding: 0.75rem 1.5rem; background: transparent;
-           border: 1px solid var(--color-accent); color: var(--color-accent);
-           cursor: pointer; transition: all var(--transition-medium);
+           padding: 0.8rem 1.8rem; background: var(--color-accent);
+           border: none; color: var(--color-bg);
+           cursor: pointer; transition: all 0.3s ease;
+           clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
        }
-       .nav-cta:hover { background: var(--color-accent); color: var(--color-bg); }
-       .mobile-menu-btn { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:5px; }
-       .mobile-menu-btn span { display:block; width:25px; height:2px; background:var(--color-fg); transition:all var(--transition-medium); }
-       .mobile-menu-btn.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
-       .mobile-menu-btn.active span:nth-child(2) { opacity:0; }
-       .mobile-menu-btn.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
-       .mobile-menu {
-           position:fixed; top:0; left:0; width:100%; height:100vh;
-           background:var(--color-bg); z-index:99;
-           display:flex; align-items:center; justify-content:center;
-           opacity:0; visibility:hidden; transition:all var(--transition-medium);
-       }
-       .mobile-menu.active { opacity:1; visibility:visible; }
-       .mobile-nav-links { list-style:none; text-align:center; }
-       .mobile-nav-links li { margin:2rem 0; }
-       .mobile-nav-links a {
-           font-family:var(--font-display); font-size:2.5rem; font-weight:700;
-           color:var(--color-fg); text-decoration:none; transition:color var(--transition-fast);
-       }
-       .mobile-nav-links a:hover { color:var(--color-accent); }
+       .nav-cta:hover { transform: scale(1.05); background: var(--color-fg); }
+
+       /* --- Hero Section --- */
        .hero {
            position:relative; height:100vh; width:100%; overflow:hidden;
            display:flex; align-items:center; justify-content:center;
        }
        .hero-bg-image {
            position:absolute; top:0; left:0; width:100%; height:100%;
-           background-image: url('https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?q=80&w=2070&auto=format&fit=crop');
+           background-image: linear-gradient(to bottom, rgba(11,11,11,0.4), rgba(11,11,11,0.9)), 
+                             url('https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?q=80&w=2070&auto=format&fit=crop');
            background-size:cover; background-position:center;
-           z-index:0; opacity:0.68;
-           will-change: transform; transform: translate3d(0,0,0);
+           z-index:0; transform: scale(1.1);
        }
-       .hero-grid {
-           position:absolute; top:0; left:0; width:100%; height:100%;
-           display:grid; grid-template-columns:repeat(8,1fr); grid-template-rows:repeat(6,1fr);
-           gap:var(--grid-gap); z-index:1;
-           will-change: transform; transform: translate3d(0,0,0);
-       }
-       .grid-cell {
-           background:var(--color-bg); position:relative; overflow:hidden;
-           transition: opacity 2.6s cubic-bezier(0.23,1,0.32,1);
-           will-change: opacity, transform; transform: translate3d(0,0,0);
-       }
-       .hero.loaded .grid-cell { opacity: 0.06; }
-       .hero.loaded .grid-cell.orange { opacity: 0.24; }
-       .grid-cell.orange { background:var(--color-accent); }
-       .grid-cell.orange::after {
-           content:''; position:absolute; top:50%; left:50%; width:20%; height:20%;
-           background:var(--color-bg); transform:translate(-50%,-50%) rotate(45deg);
-       }
-       .hero-content { position:relative; z-index:2; text-align:center; padding:2rem; }
-       .title-block {
-           display:inline-block; padding:1rem 2rem; margin:0.5rem;
-           background:var(--color-bg); border:2px solid var(--color-fg);
-       }
-       .title-block.title-right {
-           background:var(--color-accent); border-color:var(--color-accent);
-       }
+       .hero-content { position:relative; z-index:2; text-align:center; }
+       
        .hero-title {
-           font-family:var(--font-display); font-size:clamp(3rem,12vw,10rem);
-           font-weight:900; letter-spacing:-0.05em; line-height:1; margin:0;
+           font-family:var(--font-display); font-size:clamp(3rem, 10vw, 8rem);
+           font-weight:900; letter-spacing:-0.03em; line-height:0.9; margin:0;
+           text-transform: uppercase;
        }
-       .hero-title.accent { color:var(--color-bg); }
+       .hero-title span { display: block; }
+       .text-outline {
+           color: transparent;
+           -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+       }
+
        .hero-subtitle {
-           font-family:var(--font-body); font-size:1.1rem; font-weight:400;
-           letter-spacing:0.25em; text-transform:uppercase; color:var(--color-muted);
-           margin-top:2.5rem; background:rgba(0,0,0,0.6); padding:0.6rem 1.2rem;
-           display:inline-block;
+           font-family:var(--font-body); font-size:1rem; font-weight:400;
+           letter-spacing:0.4em; text-transform:uppercase; color:var(--color-accent);
+           margin-top:2rem; display:block;
+           opacity: 0; transform: translateY(20px);
+           animation: fadeUp 1s ease forwards 1s;
        }
+       @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
        .hero-cta {
-           display:inline-block; margin-top:3.5rem; padding:1.2rem 3rem;
-           font-family:var(--font-display); font-size:0.95rem; font-weight:600;
+           display:inline-block; margin-top:3rem; padding:1.2rem 3.5rem;
+           font-family:var(--font-display); font-size:0.9rem; font-weight:700;
            text-transform:uppercase; letter-spacing:0.2em; color:var(--color-fg);
-           text-decoration:none; border:1px solid var(--color-fg);
-           position:relative; overflow:hidden; transition:all var(--transition-medium);
-           background:rgba(0,0,0,0.5);
+           text-decoration:none; border: 1px solid var(--color-fg);
+           transition:all 0.4s ease;
        }
-       .hero-cta::before {
-           content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
-           background:var(--color-accent); transition:left var(--transition-medium); z-index:-1;
-       }
-       .hero-cta:hover { border-color:var(--color-accent); color:var(--color-bg); }
-       .hero-cta:hover::before { left:0; }
-       .scroll-indicator {
-           position:absolute; bottom:3rem; left:50%; transform:translateX(-50%);
-           display:flex; flex-direction:column; align-items:center; gap:1rem; z-index:2;
-       }
-       .scroll-text {
-           font-family:var(--font-display); font-size:0.625rem; font-weight:500;
-           letter-spacing:0.3em; text-transform:uppercase; color:var(--color-muted);
-       }
-       .scroll-line {
-           width:1px; height:60px;
-           background:linear-gradient(to bottom, var(--color-accent), transparent);
-           animation:scrollPulse 2s ease-in-out infinite;
-       }
-       @keyframes scrollPulse { 0%,100% { opacity:0.3; transform:scaleY(0.5); } 50% { opacity:1; transform:scaleY(1); } }
-       section { position:relative; padding:8rem 3rem; overflow:hidden; }
-       .section-header { margin-bottom:4rem; }
+       .hero-cta:hover { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg); }
+
+       /* --- Reveal Animation --- */
+       .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
+       .reveal.active { opacity: 1; transform: translateY(0); }
+
+       /* --- Sections --- */
+       section { position:relative; padding:10rem 4rem; }
        .section-label {
-           display:block; font-family:var(--font-display); font-size:0.75rem; font-weight:600;
-           letter-spacing:0.3em; text-transform:uppercase; color:var(--color-accent); margin-bottom:1rem;
+           color: var(--color-accent); font-weight: 700; letter-spacing: 0.4em;
+           font-size: 0.75rem; display: block; margin-bottom: 1rem;
        }
        .section-title {
-           font-family:var(--font-display); font-size:clamp(2rem,5vw,4.5rem);
-           font-weight:800; line-height:1.1; margin:0;
+           font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem);
+           font-weight: 800; line-height: 1.1; margin-bottom: 4rem;
        }
-       .title-main { display:block; color:var(--color-fg); }
-       .title-accent { display:block; color:var(--color-accent); }
-       .decorative-text {
-           position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-           font-family:var(--font-display); font-size:clamp(10rem,25vw,22rem);
-           font-weight:900; color:var(--color-fg); opacity:0.02; pointer-events:none;
-           white-space:nowrap; z-index:0; will-change:transform; transform:translate3d(-50%,-50%,0);
-       }
-       .services { min-height:100vh; }
+
+       /* --- Services --- */
        .services-grid {
-           display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:2rem;
+           display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;
        }
        .service-card {
-           background:rgba(255,255,255,0.02); border:1px solid var(--color-muted-dark);
-           padding:2.5rem; transition:all var(--transition-medium);
+           background: rgba(255,255,255,0.03);
+           backdrop-filter: blur(10px);
+           border: 1px solid var(--color-muted-dark);
+           padding: 3rem; transition: all 0.4s ease;
        }
        .service-card:hover {
-           border-color:var(--color-accent); transform:translateY(-10px);
+           background: rgba(255,140,0,0.05);
+           border-color: var(--color-accent);
+           transform: translateY(-10px);
        }
-       .service-icon {
-           font-size:3.5rem; color:var(--color-accent); margin-bottom:1.5rem;
-       }
-       .service-title { font-family:var(--font-display); font-size:1.5rem; font-weight:700; margin-bottom:1rem; }
+       .service-icon { font-size: 3rem; margin-bottom: 2rem; display: block; }
+       .service-title { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 1rem; }
+
+       /* --- Portfolio --- */
        .portfolio-grid {
-           display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr)); gap:1.5rem;
+           display:grid; grid-template-columns:repeat(auto-fill, minmax(400px, 1fr)); gap:1.5rem;
        }
        .portfolio-item {
-           aspect-ratio:4/3; overflow:hidden; position:relative;
-           background:rgba(255,255,255,0.03); border:1px solid var(--color-muted-dark);
-           transition:all var(--transition-medium);
+           aspect-ratio: 16/10; overflow:hidden; position:relative;
+           background: #1a1a1a;
        }
-       .portfolio-item:hover { transform:scale(1.03); border-color:var(--color-accent); }
        .portfolio-item img {
-           width:100%; height:100%; object-fit:cover; transition:transform var(--transition-slow);
+           width:100%; height:100%; object-fit:cover; filter: grayscale(100%);
+           transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
        }
-       .portfolio-item:hover img { transform:scale(1.08); }
-       .about { background:linear-gradient(to bottom, var(--color-bg), rgba(255,140,0,0.04)); }
-       .contact { min-height:80vh; }
-       .contact-content { display:grid; grid-template-columns:1fr 1fr; gap:5rem; max-width:1400px; margin:0 auto; }
-       .contact-form .form-group { margin-bottom:1.8rem; }
+       .portfolio-item:hover img { transform:scale(1.1); filter: grayscale(0%); }
+
+       /* --- Contact Form --- */
+       .contact-content { display:grid; grid-template-columns: 1.2fr 0.8fr; gap:5rem; }
        .contact-form input, .contact-form textarea {
-           width:100%; padding:1.2rem; background:rgba(255,255,255,0.03);
-           border:1px solid var(--color-muted-dark); color:var(--color-fg);
-           font-family:var(--font-body); font-size:1rem;
+           width:100%; padding:1.5rem; background: transparent;
+           border: none; border-bottom: 1px solid var(--color-muted-dark);
+           color:var(--color-fg); margin-bottom: 1.5rem; transition: 0.3s;
        }
-       .contact-form input:focus, .contact-form textarea:focus { border-color:var(--color-accent); outline:none; }
+       .contact-form input:focus, .contact-form textarea:focus { border-color: var(--color-accent); outline: none; }
        .submit-btn {
-           background:var(--color-accent); color:var(--color-bg);
-           border:none; padding:1.2rem 3rem; font-family:var(--font-display);
-           font-size:1rem; font-weight:600; text-transform:uppercase; letter-spacing:0.15em;
-           cursor:pointer; transition:all var(--transition-medium);
+           background: var(--color-accent); color: var(--color-bg);
+           border:none; padding:1.2rem 4rem; font-family:var(--font-display);
+           font-weight:700; text-transform:uppercase; cursor:pointer;
        }
-       .submit-btn:hover { background:var(--color-accent-light); transform:translateY(-3px); }
-       @media (max-width:1024px) {
-           .contact-content { grid-template-columns:1fr; }
-       }
-       @media (max-width:768px) {
-           .navigation { padding:1rem 1.5rem; }
-           .nav-links, .nav-cta { display:none; }
-           .mobile-menu-btn { display:flex; }
-           section { padding:5rem 1.5rem; }
-           .hero-grid { grid-template-columns:repeat(4,1fr); grid-template-rows:repeat(8,1fr); }
-           .grid-cell:nth-child(n+33) { display:none; }
-       }
-       /* Parallax */
-       .hero-bg-image, .decorative-text, .grid-cell {
-           will-change: transform;
-           transform: translate3d(0,0,0);
+
+       /* --- Mobile Menu --- */
+       .mobile-menu-btn { display:none; flex-direction:column; gap:6px; background:none; border:none; cursor:pointer; }
+       .mobile-menu-btn span { width:30px; height:2px; background:white; transition: 0.3s; }
+       
+       @media (max-width: 1024px) {
+           .navigation { padding: 1.5rem 2rem; }
+           .nav-links, .nav-cta { display: none; }
+           .mobile-menu-btn { display: flex; }
+           .contact-content { grid-template-columns: 1fr; }
+           section { padding: 6rem 2rem; }
        }
    </style>
 </head>
@@ -285,6 +244,8 @@
    <div class="cursor"></div>
    <div class="cursor-follower"></div>
    <div class="grain-overlay"></div>
+   <div class="bg-glow"></div>
+
    <nav class="navigation">
        <div class="nav-logo">
            <span class="logo-main">TAKEDI</span>
@@ -300,214 +261,144 @@
            <span></span><span></span><span></span>
        </button>
    </nav>
-   <div class="mobile-menu">
-       <ul class="mobile-nav-links">
-           <li><a href="#services">Services</a></li>
-           <li><a href="#portfolio">Portfolio</a></li>
-           <li><a href="#about">About</a></li>
-           <li><a href="#contact">Contact</a></li>
-       </ul>
-   </div>
+
    <section class="hero">
        <div class="hero-bg-image"></div>
-       <div class="hero-grid">
-           <!-- Same grid cells as before – keeping the signature look -->
-           <div class="grid-cell"></div><div class="grid-cell orange"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell orange"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell orange"></div>
-           <div class="grid-cell orange"></div><div class="grid-cell"></div><div class="grid-cell orange"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell orange"></div><div class="grid-cell"></div><div class="grid-cell"></div>
-           <!-- ... (you can keep or shorten the full 48 cells if you want) ... -->
-       </div>
        <div class="hero-content">
-           <div class="title-block">
-               <h1 class="hero-title">TAKEDI</h1>
-           </div>
-           <div class="title-block title-right">
-               <h1 class="hero-title accent">MODERN PRINTERS</h1>
-           </div>
-           <p class="hero-subtitle">Modern Printers & Supply • Excellence in Printing</p>
+           <h1 class="hero-title">
+               <span class="reveal">TAKEDI</span>
+               <span class="text-outline reveal">MODERN PRINTERS</span>
+           </h1>
+           <span class="hero-subtitle">Engineering Excellence in Print & Supply</span>
            <a href="#contact" class="hero-cta">Request a Quote</a>
        </div>
-       <div class="scroll-indicator">
-           <span class="scroll-text">SCROLL</span>
-           <div class="scroll-line"></div>
-       </div>
    </section>
-   <section id="services" class="services">
-       <div class="decorative-text">SERVICES</div>
-       <div class="section-header">
+
+   <section id="services">
+       <div class="reveal">
            <span class="section-label">OUR EXPERTISE</span>
-           <h2 class="section-title">
-               <span class="title-main">Professional</span>
-               <span class="title-accent">Printing Solutions</span>
-           </h2>
+           <h2 class="section-title">Professional Printing<br><span style="color:var(--color-accent)">Industrial Solutions</span></h2>
        </div>
        <div class="services-grid">
-           <div class="service-card">
-               <div class="service-icon">🖨️</div>
+           <div class="service-card reveal">
+               <span class="service-icon">🖨️</span>
                <h3 class="service-title">Large Format</h3>
-               <p>High-visibility signage boards, reflective safety signs, and custom lightboxes designed for harsh industrial environments.</p>
+               <p>High-visibility signage boards, reflective safety signs, and custom lightboxes designed for industrial environments.</p>
            </div>
-           <div class="service-card">
-               <div class="service-icon">🚗</div>
+           <div class="service-card reveal">
+               <span class="service-icon">🚗</span>
                <h3 class="service-title">Vehicle Branding</h3>
                <p>Strategic fleet branding and professional wrapping that turns every vehicle into a high-impact mobile billboard.</p>
            </div>
-           <div class="service-card">
-               <div class="service-icon">🦺</div>
+           <div class="service-card reveal">
+               <span class="service-icon">🦺</span>
                <h3 class="service-title">Branding & PPE</h3>
-               <p>Custom corporate apparel, premium embroidery, and SABS-standard PPE supply tailored to your brand identity.</p>
+               <p>Custom corporate apparel and SABS-standard PPE supply tailored to your specific brand identity.</p>
            </div>
        </div>
    </section>
-   <section id="portfolio" class="portfolio" style="background:#111;">
-       <div class="decorative-text">PORTFOLIO</div>
-       <div class="section-header">
-           <span class="section-label">OUR WORK GALLERY</span>
-           <h2 class="section-title">
-               <span class="title-main">Our</span>
-               <span class="title-accent">Print Projects</span>
-           </h2>
+
+   <section id="portfolio" style="background:#050505;">
+       <div class="reveal">
+           <span class="section-label">LATEST PROJECTS</span>
+           <h2 class="section-title">Our Work Gallery</h2>
        </div>
        <div class="portfolio-grid">
-           <!-- Replace with your real project images -->
-           <div class="portfolio-item"><img src="https://mksigns.com/cdn/shop/files/msdANilPKaf_1.png?v=1761281030&width=1946" alt="Industrial Signage"></div>
-           <div class="portfolio-item"><img src="https://blog.wrapmate.com/wp-content/uploads/2023/10/Pest-Control-Small-Truck-Wrap-01-1024x576.jpg" alt="Fleet Vehicle Branding"></div>
-           <div class="portfolio-item"><img src="https://www.protoolreviews.com/wp-content/uploads/2022/02/Milwaukee-Branded-PPE.jpg" alt="Custom Safety Gear"></div>
-           <div class="portfolio-item"><img src="https://totallyyourstitch.com/cdn/shop/products/ladiespolologo.jpg?v=1720811173&width=1445" alt="Corporate Apparel"></div>
-           <div class="portfolio-item"><img src="https://image.rolanddga.com/-/media/roland/images/applications/_related-products/uv.png?rev=b003869f46f2465a8d248409e4228ee9&la=en&h=533&w=800&hash=185C38C2ACA639200623A84B5732E821" alt="State-of-the-Art Equipment"></div>
-           <div class="portfolio-item"><img src="https://www.largeformatreview.com/wp-content/uploads/2018/04/La_Digital_Impser_002.jpg" alt="Production in Action"></div>
+           <div class="portfolio-item reveal"><img src="https://mksigns.com/cdn/shop/files/msdANilPKaf_1.png?v=1761281030&width=1946" alt="Project"></div>
+           <div class="portfolio-item reveal"><img src="https://blog.wrapmate.com/wp-content/uploads/2023/10/Pest-Control-Small-Truck-Wrap-01-1024x576.jpg" alt="Project"></div>
+           <div class="portfolio-item reveal"><img src="https://www.protoolreviews.com/wp-content/uploads/2022/02/Milwaukee-Branded-PPE.jpg" alt="Project"></div>
+           <div class="portfolio-item reveal"><img src="https://totallyyourstitch.com/cdn/shop/products/ladiespolologo.jpg?v=1720811173&width=1445" alt="Project"></div>
        </div>
    </section>
-   <section id="about" class="about">
-       <div class="decorative-text">ABOUT</div>
-       <div class="section-header">
-           <span class="section-label">OUR STORY</span>
-           <h2 class="section-title">
-               <span class="title-main">Defining</span>
-               <span class="title-accent">Professionalism</span>
-           </h2>
-       </div>
-       <p style="max-width:800px; margin:0 auto 4rem; font-size:1.2rem; color:var(--color-muted); text-align:center;">
-           Established by TAKEDI, we specialize in high-quality digital printing and branding solutions specifically engineered for the mining, industrial, and commercial sectors. Our commitment lies in precision engineering, rapid turnaround, and absolute client satisfaction.
-       </p>
-   </section>
-   <section id="contact" class="contact">
-       <div class="section-header">
-           <span class="section-label">GET IN TOUCH</span>
-           <h2 class="section-title">
-               <span class="title-main">Start Your</span>
-               <span class="title-accent">Project Today</span>
-           </h2>
-       </div>
-       <div class="contact-content">
+
+   <section id="about">
+       <div class="contact-content reveal">
            <div>
+               <span class="section-label">OUR STORY</span>
+               <h2 class="section-title">Defining Professionalism</h2>
+               <p style="font-size:1.2rem; color:var(--color-muted); max-width:600px;">
+                   Established by TAKEDI, we specialize in high-quality digital printing and branding solutions specifically engineered for the mining, industrial, and commercial sectors.
+               </p>
+           </div>
+       </div>
+   </section>
+
+   <section id="contact">
+       <div class="contact-content">
+           <div class="reveal">
+               <span class="section-label">GET IN TOUCH</span>
+               <h2 class="section-title">Start Your Project</h2>
                <form class="contact-form">
-                   <div class="form-group">
-                       <input type="text" placeholder="Your Name" required>
-                   </div>
-                   <div class="form-group">
-                       <input type="email" placeholder="Email Address" required>
-                   </div>
-                   <div class="form-group">
-                       <input type="tel" placeholder="Phone Number">
-                   </div>
-                   <div class="form-group">
-                       <textarea rows="5" placeholder="Tell us about your printing project..."></textarea>
-                   </div>
+                   <input type="text" placeholder="Full Name" required>
+                   <input type="email" placeholder="Email Address" required>
+                   <textarea rows="4" placeholder="How can we help?"></textarea>
                    <button type="submit" class="submit-btn">Send Request</button>
                </form>
            </div>
-           <div style="display:flex; flex-direction:column; gap:2rem;">
+           <div class="reveal" style="display:flex; flex-direction:column; gap:2rem; justify-content:center;">
                <div>
-                   <strong style="color:var(--color-accent);">Email:</strong><br>
-                   <a href="mailto:info@takedi.co.za" style="color:var(--color-fg);">info@takedi.co.za</a>
-               </div>
-               <div>
-                   <strong style="color:var(--color-accent);">Phone:</strong><br>
-                   060 711 8356 / 015 004 0179
-               </div>
-               <div>
-                   <strong style="color:var(--color-accent);">Location:</strong><br>
+                   <strong style="color:var(--color-accent); text-transform:uppercase; letter-spacing:0.1em;">Location</strong><br>
                    15 Nelson Mandela Street, Mokopane
+               </div>
+               <div>
+                   <strong style="color:var(--color-accent); text-transform:uppercase; letter-spacing:0.1em;">Contact</strong><br>
+                   info@takedi.co.za<br>
+                   060 711 8356
                </div>
            </div>
        </div>
    </section>
-   <footer style="padding:4rem 3rem; text-align:center; border-top:1px solid var(--color-muted-dark); color:var(--color-muted); font-size:0.9rem;">
-       © 2026 TAKEDI Modern Printers & Supply. All Rights Reserved.
+
+   <footer style="padding:4rem 2rem; text-align:center; opacity: 0.5; font-size: 0.8rem; border-top: 1px solid var(--color-muted-dark);">
+       © 2026 TAKEDI MODERN PRINTERS & SUPPLY.
    </footer>
+
    <script>
-       // Cursor
+       // --- Cursor Logic ---
        const cursor = document.querySelector('.cursor');
-       const cursorFollower = document.querySelector('.cursor-follower');
-       let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, followerX = 0, followerY = 0;
+       const follower = document.querySelector('.cursor-follower');
+       let mouseX = 0, mouseY = 0, currX = 0, currY = 0, fX = 0, fY = 0;
+
        document.addEventListener('mousemove', e => {
            mouseX = e.clientX; mouseY = e.clientY;
        });
-       function animateCursor() {
-           cursorX += (mouseX - cursorX) * 0.2;
-           cursorY += (mouseY - cursorY) * 0.2;
-           followerX += (mouseX - followerX) * 0.1;
-           followerY += (mouseY - followerY) * 0.1;
-           cursor.style.left = cursorX - 4 + 'px';
-           cursor.style.top = cursorY - 4 + 'px';
-           cursorFollower.style.left = followerX - 20 + 'px';
-           cursorFollower.style.top = followerY - 20 + 'px';
-           requestAnimationFrame(animateCursor);
+
+       function updateCursor() {
+           currX += (mouseX - currX) * 0.15;
+           currY += (mouseY - currY) * 0.15;
+           fX += (mouseX - fX) * 0.1;
+           fY += (mouseY - fY) * 0.1;
+           cursor.style.transform = `translate3d(${currX}px, ${currY}px, 0)`;
+           follower.style.transform = `translate3d(${fX - 16}px, ${fY - 16}px, 0)`;
+           requestAnimationFrame(updateCursor);
        }
-       animateCursor();
+       updateCursor();
+
        document.querySelectorAll('a, button').forEach(el => {
-           el.addEventListener('mouseenter', () => {
-               cursor.classList.add('hover'); cursorFollower.classList.add('hover');
-           });
-           el.addEventListener('mouseleave', () => {
-               cursor.classList.remove('hover'); cursorFollower.classList.remove('hover');
-           });
+           el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+           el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
        });
-       // Mobile menu
-       document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
-           document.querySelector('.mobile-menu-btn').classList.toggle('active');
-           document.querySelector('.mobile-menu').classList.toggle('active');
-       });
-       // Nav scroll effect
+
+       // --- Reveal Animation ---
+       const observerOptions = { threshold: 0.15 };
+       const observer = new IntersectionObserver((entries) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) entry.target.classList.add('active');
+           });
+       }, observerOptions);
+
+       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+       // --- Nav Scroll ---
        window.addEventListener('scroll', () => {
            document.querySelector('.navigation').classList.toggle('scrolled', window.scrollY > 50);
        });
-       // Smooth scroll
-       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-           anchor.addEventListener('click', e => {
-               e.preventDefault();
-               document.querySelector(anchor.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-           });
-       });
-       // Hero grid fade
-       window.addEventListener('load', () => {
-           setTimeout(() => document.querySelector('.hero').classList.add('loaded'), 650);
-       });
-       // Parallax
-       const parallaxLayers = [];
-       function addParallax(sel, speed) {
-           const el = document.querySelector(sel);
-           if (el) parallaxLayers.push({ element: el, speed });
-       }
-       addParallax('.hero-bg-image', 0.45);
-       addParallax('.decorative-text', -0.22);
-       document.querySelectorAll('.grid-cell').forEach((cell, i) => {
-           const offset = Math.sin(i) * 0.07;
-           parallaxLayers.push({ element: cell, speed: offset * 0.6 });
-       });
-       let ticking = false;
-       function updateParallax() {
-           const sy = window.scrollY;
-           parallaxLayers.forEach(({element, speed}) => {
-               const ty = sy * speed;
-               element.style.transform = `translate3d(0, ${ty}px, 0)`;
-           });
-           ticking = false;
-       }
+
+       // --- Parallax Hero ---
        window.addEventListener('scroll', () => {
-           if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+           const scrolled = window.scrollY;
+           document.querySelector('.hero-bg-image').style.transform = `scale(${1.1 + scrolled/5000}) translateY(${scrolled * 0.3}px)`;
        });
-       window.addEventListener('load', () => setTimeout(updateParallax, 800));
    </script>
 </body>
 </html>
