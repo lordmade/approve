@@ -73,23 +73,26 @@
        /* --- Navigation --- */
        .navigation {
            position: fixed; top:0; left:0; width:100%;
-           padding: 1rem 4rem;
+           padding: 1.5rem 4rem;
            display: flex; justify-content: space-between; align-items: center;
            z-index: 100;
            transition: all var(--transition-medium);
        }
        .navigation.scrolled {
-           padding: 0.8rem 4rem;
+           padding: 1rem 4rem;
            background: rgba(11, 11, 11, 0.8);
            backdrop-filter: blur(15px);
            border-bottom: 1px solid var(--color-muted-dark);
        }
 
-       .nav-logo-img {
-           height: 50px;
-           width: auto;
-           display: block;
-           object-fit: contain;
+       .nav-logo-text {
+           font-family: var(--font-display);
+           font-size: 1.8rem;
+           font-weight: 900;
+           letter-spacing: 0.05em;
+           color: var(--color-fg);
+           text-transform: uppercase;
+           line-height: 1;
        }
 
        .nav-links { display: flex; list-style: none; gap: 3rem; }
@@ -270,7 +273,7 @@
 
    <nav class="navigation">
        <a href="#" style="text-decoration: none;">
-           <img src="https://i.postimg.cc/c44gvfv0/takedi-removebg-preview.png" alt="TAKEDI Logo" class="nav-logo-img">
+           <span class="nav-logo-text">TAKEDI</span>
        </a>
        <ul class="nav-links">
            <li><a href="#services">Services</a></li>
