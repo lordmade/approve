@@ -1,1 +1,182 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | TAKEDI Modern Printers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0b0b0b;
+            --color-fg: #ffffff;
+            --color-accent: #ff8c00;
+            --color-muted: rgba(255, 255, 255, 0.6);
+            --color-glass: rgba(255, 255, 255, 0.03);
+            --font-display: 'Montserrat', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--color-bg);
+            color: var(--color-fg);
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Glows */
+        .glow {
+            position: fixed;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(50px);
+        }
+
+        .contact-container {
+            width: 90%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--color-glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 4rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Left Side: Info */
+        .contact-info h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .info-card {
+            margin-bottom: 2.5rem;
+        }
+
+        .info-card h4 {
+            font-family: var(--font-display);
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card p {
+            font-size: 1.2rem;
+            color: var(--color-muted);
+            transition: color 0.3s;
+        }
+
+        .info-card:hover p {
+            color: var(--color-fg);
+        }
+
+        /* Right Side: Form */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .submit-btn {
+            background: var(--color-accent);
+            color: #000;
+            padding: 1.2rem;
+            font-family: var(--font-display);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
+            cursor: pointer;
+            transition: 0.4s;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
+        }
+
+        .submit-btn:hover {
+            letter-spacing: 0.2em;
+            background: #fff;
+        }
+
+        @media (max-width: 968px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+                margin: 2rem 0;
+            }
+            .contact-info h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow" style="top: -10%; right: -10%;"></div>
+    <div class="glow" style="bottom: -10%; left: -10%;"></div>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h4 style="color: var(--color-accent); letter-spacing: 0.5em; margin-bottom: 1rem;">GET IN TOUCH</h4>
+            <h1>LET'S BUILD<br>YOUR BRAND</h1>
+            
+            <div class="info-card">
+                <h4>Location</h4>
+                <p>15 Nelson Mandela Street,<br>Mokopane, LP</p>
+            </div>
+
+            <div class="info-card">
+                <h4>Direct Contact</h4>
+                <p>info@takedi.co.za</p>
+                <p>060 711 8356</p>
+            </div>
+        </div>
+
+        <form class="contact-form">
+            <div class="input-group">
+                <input type="text" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="Subject (e.g. Vehicle Branding)">
+            </div>
+            <div class="input-group">
+                <textarea rows="5" placeholder="Tell us about your project..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Inquiry</button>
+        </form>
+    </div>
+
+</body>
+</html>
