@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAKEDI | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <base target="_blank">
+    <style>
+        :root {
+            --color-bg: #0b0b0b;
+            --color-fg: #ffffff;
+            --color-accent: #ff8c00;
+            --color-accent-dark: #e67e00;
+            --color-accent-light: #ffa94d;
+            --color-muted: rgba(255, 255, 255, 0.6);
+            --color-muted-dark: rgba(255, 255, 255, 0.1);
+            
+            --font-display: 'Montserrat', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
+            
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            --transition-slow: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        
+        html { scroll-behavior: smooth; font-size: 16px; }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-fg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        
+        /* --- Custom Cursor --- */
+        .cursor {
+            width: 8px; height: 8px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        .cursor-follower {
+            width: 40px; height: 40px;
+            border: 1px solid var(--color-accent);
+            border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9998;
+            transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+        }
+        .cursor.hover { transform: scale(3); opacity: 0.5; }
+
+        /* --- Grain & Background Effects --- */
+        .grain-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            pointer-events: none; z-index: 9990; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        .bg-glow {
+            position: fixed; top: 50%; left: 50%; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(255,140,0,0.08) 0%, rgba(0,0,0,0) 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none; z-index: -1;
+        }
+
+        /* --- Navigation --- */
+        .navigation {
+            position: fixed; top:0; left:0; width:100%;
+            padding: 1.5rem 4rem;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100;
+            transition: all var(--transition-medium);
+        }
+        .navigation.scrolled {
+            padding: 1rem 4rem;
+            background: rgba(11, 11, 11, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--color-muted-dark);
+        }
+        .nav-logo-text {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: var(--color-fg);
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .nav-links { display: flex; list-style: none; gap: 3rem; }
+        .nav-links a {
+            font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-fg);
+            text-decoration: none; position: relative;
+        }
+        .nav-links a::after {
+            content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px;
+            background: var(--color-accent); transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-cta {
+            font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            padding: 0.8rem 1.8rem; background: var(--color-accent);
+            border: none; color: var(--color-bg);
+            cursor: pointer; transition: all 0.3s ease;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+
+        /* --- Portfolio Hero --- */
+        .portfolio-hero {
+            position: relative;
+            height: 85vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .portfolio-hero .hero-bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: linear-gradient(to bottom, rgba(11,11,11,0.65), rgba(11,11,11,0.9)), 
+                              url('https://i.postimg.cc/WpmYNckK/Screenshot-2026-02-18-152539.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            transform: scale(1.1);
+        }
+        .portfolio-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+        }
+        .portfolio-hero-content .section-label {
+            color: var(--color-accent);
+            font-weight: 700;
+            letter-spacing: 0.4em;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .portfolio-hero-content h1 {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 10vw, 9rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+            text-transform: uppercase;
+        }
+
+        /* --- Filters --- */
+        .filters {
+            padding: 4rem 4rem 2rem;
+            background: #050505;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 0.85rem 2.2rem;
+            background: transparent;
+            border: 1px solid var(--color-muted-dark);
+            color: var(--color-fg);
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+            color: var(--color-bg);
+        }
+
+        /* --- Portfolio Grid --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 1.8rem;
+            padding: 2rem 4rem 8rem;
+            background: #050505;
+        }
+        .portfolio-card {
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .portfolio-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(80%);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .portfolio-card:hover img {
+            transform: scale(1.12);
+            filter: grayscale(0%);
+        }
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.92));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2.5rem 2rem 2rem;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        .portfolio-overlay .category {
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .portfolio-overlay h3 {
+            font-family: var(--font-display);
+            font-size: 1.65rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* --- Reveal --- */
+        .reveal { opacity: 0; transform: translateY(60px); transition: all 1.2s cubic-bezier(0.25,1,0.5,1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(11,11,11,0.98);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .modal-content {
+            max-width: 1100px;
+            width: 100%;
+            background: #111;
+            border: 1px solid var(--color-muted-dark);
+            position: relative;
+        }
+        .modal-content img {
+            width: 100%;
+            display: block;
+        }
+        .modal-info {
+            padding: 2.5rem;
+        }
+        .modal-info h2 {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2.2rem;
+            color: var(--color-accent);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* Mobile */
+        .mobile-menu-btn { display: none; }
+        @media (max-width: 1024px) {
+            .navigation { padding: 1.2rem 2rem; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; flex-direction: column; gap: 6px; }
+            .mobile-menu-btn span { width: 32px; height: 2px; background: white; }
+            .portfolio-grid { padding: 2rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+            .filters { padding: 3rem 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    <div class="grain-overlay"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+        <a href="index.html" style="text-decoration: none;">
+            <span class="nav-logo-text">TAKEDI</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="portfolio.html" class="active">Portfolio</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <button class="nav-cta">Get Quote</button>
+        <button class="mobile-menu-btn">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Portfolio Hero -->
+    <section class="portfolio-hero">
+        <div class="hero-bg-image"></div>
+        <div class="portfolio-hero-content">
+            <span class="section-label">SHOWCASE OF EXCELLENCE</span>
+            <h1>Our Work</h1>
+            <p style="margin-top: 2rem; font-size: 1.25rem; max-width: 620px; margin-left: auto; margin-right: auto; opacity: 0.9;">
+                Premium industrial printing &amp; branding that turns vehicles, sites, and teams into powerful brand statements.
+            </p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="vehicle">Vehicle Branding</button>
+        <button class="filter-btn" data-filter="signage">Large Format &amp; Signage</button>
+        <button class="filter-btn" data-filter="ppe">PPE &amp; Apparel</button>
+    </div>
+
+    <!-- Portfolio Grid -->
+    <div class="portfolio-grid" id="portfolioGrid">
+        
+        <!-- Project 1 -->
+        <div class="portfolio-card reveal" data-category="signage" onclick="openModal(1)">
+            <img src="https://mksigns.com/cdn/shop/files/msdANilPKaf_1.png?v=1761281030&width=1946" alt="Mining Signage">
+            <div class="portfolio-overlay">
+                <div class="category">Large Format &amp; Signage</div>
+                <h3>Mining Directional System</h3>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(2)">
+            <img src="https://blog.wrapmate.com/wp-content/uploads/2023/10/Pest-Control-Small-Truck-Wrap-01-1024x576.jpg" alt="Pest Control Truck">
+            <div class="portfolio-overlay">
+                <div class="category">Vehicle Branding</div>
+                <h3>PestPro Fleet Wrap</h3>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(3)">
+            <img src="https://www.protoolreviews.com/wp-content/uploads/2022/02/Milwaukee-Branded-PPE.jpg" alt="Branded PPE">
+            <div class="portfolio-overlay">
+                <div class="category">PPE &amp; Apparel</div>
+                <h3>Milwaukee Safety Range</h3>
+            </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(4)">
+            <img src="https://totallyyourstitch.com/cdn/shop/products/ladiespolologo.jpg?v=1720811173&width=1445" alt="Corporate Polos">
+            <div class="portfolio-overlay">
+                <div class="category">PPE &amp; Apparel</div>
+                <h3>Corporate Polo Collection</h3>
+            </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(5)">
+            <img src="https://wraps.co.za/wp-content/uploads/2022/08/full-fleet-wrap-mining.jpg" alt="Mining Fleet">
+            <div class="portfolio-overlay">
+                <div class="category">Vehicle Branding</div>
+                <h3>Anglo American Fleet</h3>
+            </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="portfolio-card reveal" data-category="signage" onclick="openModal(6)">
+            <img src="https://www.safety-sign.co.za/wp-content/uploads/2023/08/industrial-safety-signs.jpg" alt="Safety Signage">
+            <div class="portfolio-overlay">
+                <div class="category">Large Format &amp; Signage</div>
+                <h3>Platinum Mine Hazard Boards</h3>
+            </div>
+        </div>
+
+        <!-- Project 7 -->
+        <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(7)">
+            <img src="https://images.unsplash.com/photo-1581092160607-7c7b5b2b7e8c?w=800" alt="Hi-Vis Apparel">
+            <div class="portfolio-overlay">
+                <div class="category">PPE &amp; Apparel</div>
+                <h3>Full Hi-Vis Corporate Range</h3>
+            </div>
+        </div>
+
+        <!-- Project 8 -->
+        <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(8)">
+            <img src="https://www.vehiclewrap.co.za/wp-content/uploads/2024/01/heavy-haulage-wrap.jpg" alt="Heavy Haulage">
+            <div class="portfolio-overlay">
+                <div class="category">Vehicle Branding</div>
+                <h3>Heavy Haulage Tipper Fleet</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <img id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <div id="modalCategory" class="category" style="font-size:1rem;"></div>
+                <h2 id="modalTitle"></h2>
+                <p id="modalDesc" style="color:var(--color-muted); line-height:1.7; font-size:1.05rem;">
+                    Premium execution with SABS-compliant materials, 3M reflective technology, and 5-year warranty on all prints.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer style="padding:5rem 2rem; text-align:center; opacity: 0.5; font-size: 0.8rem; border-top: 1px solid var(--color-muted-dark);">
+        © 2026 TAKEDI MODERN PRINTERS &amp; SUPPLY. All Rights Reserved.
+    </footer>
+
+    <script>
+        // Cursor Logic
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0, currX = 0, currY = 0, fX = 0, fY = 0;
+        
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function updateCursor() {
+            currX += (mouseX - currX) * 0.15;
+            currY += (mouseY - currY) * 0.15;
+            fX += (mouseX - fX) * 0.1;
+            fY += (mouseY - fY) * 0.1;
+            cursor.style.transform = `translate3d(${currX}px, ${currY}px, 0)`;
+            follower.style.transform = `translate3d(${fX - 20}px, ${fY - 20}px, 0)`;
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        document.querySelectorAll('a, button, .portfolio-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Nav Scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navigation').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Portfolio Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.portfolio-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                cards.forEach(card => {
+                    if (filterValue === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = card.getAttribute('data-category') === filterValue ? 'block' : 'none';
+                    }
+                });
+            });
+        });
+
+        // Modal
+        let currentModal = 0;
+
+        function openModal(id) {
+            currentModal = id;
+            const modal = document.getElementById('projectModal');
+            const img = document.getElementById('modalImage');
+            const titleEl = document.getElementById('modalTitle');
+            const catEl = document.getElementById('modalCategory');
+
+            const card = document.querySelector(`.portfolio-card[onclick="openModal(${id})"]`);
+            const imgSrc = card.querySelector('img').src;
+            const title = card.querySelector('h3').innerText;
+            const cat = card.querySelector('.category').innerText;
+
+            img.src = imgSrc;
+            titleEl.innerText = title;
+            catEl.innerText = cat;
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'visible';
+        }
+
+        // Close modal with ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") closeModal();
+        });
+
+        // Click outside modal to close
+        document.getElementById('projectModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>
