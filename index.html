@@ -33,7 +33,7 @@
             line-height: 1.7;
         }
 
-        /* ── Navigation ── */
+        /* Navigation */
         .navigation {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -97,7 +97,6 @@
 
         .nav-cta:hover { background: var(--color-accent-dark); transform: translateY(-2px); }
 
-        /* Mobile Menu Button */
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
@@ -116,7 +115,6 @@
             transition: var(--transition);
         }
 
-        /* Mobile Menu */
         .mobile-menu {
             position: fixed;
             top: 0; right: -100%;
@@ -130,9 +128,7 @@
             transition: right 0.5s cubic-bezier(0.77,0,0.175,1);
         }
 
-        .mobile-menu.active {
-            right: 0;
-        }
+        .mobile-menu.active { right: 0; }
 
         .mobile-menu ul {
             list-style: none;
@@ -152,9 +148,7 @@
             transition: var(--transition);
         }
 
-        .mobile-menu a:hover {
-            color: var(--color-accent);
-        }
+        .mobile-menu a:hover { color: var(--color-accent); }
 
         .mobile-menu .nav-cta {
             margin-top: 2rem;
@@ -164,7 +158,6 @@
             padding: 1.2rem;
         }
 
-        /* Hamburger Animation */
         .mobile-menu-btn.active span:nth-child(1) {
             transform: rotate(45deg) translate(6px, 6px);
         }
@@ -182,10 +175,12 @@
             position: relative;
             overflow: hidden;
         }
+
         .carousel {
             position: absolute; inset: 0;
             display: flex; transition: transform 1.2s ease;
         }
+
         .carousel-slide {
             min-width: 100%; height: 100%;
             background-size: cover;
@@ -195,13 +190,16 @@
             text-align: center;
             color: white;
         }
+
         .carousel-slide::before {
             content: ''; position: absolute; inset: 0;
             background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
         }
+
         .hero-content {
             position: relative; z-index: 2; max-width: 900px; padding: 2rem;
         }
+
         .hero-title {
             font-family: var(--font-display);
             font-size: clamp(4rem, 10vw, 9rem);
@@ -211,6 +209,7 @@
             margin-bottom: 1rem;
             text-shadow: 0 4px 12px rgba(0,0,0,0.6);
         }
+
         .hero-subtitle {
             font-size: 1.6rem;
             letter-spacing: 0.3em;
@@ -218,6 +217,7 @@
             color: var(--color-accent);
             margin-bottom: 2.5rem;
         }
+
         .hero-cta {
             padding: 1.3rem 3.8rem;
             background: var(--color-accent);
@@ -228,7 +228,34 @@
             border-radius: 4px;
             transition: var(--transition);
         }
+
         .hero-cta:hover { background: var(--color-accent-dark); transform: scale(1.05); }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 14px;
+            z-index: 3;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .dot.active {
+            background: var(--color-accent);
+            border-color: white;
+            transform: scale(1.3);
+        }
 
         /* Sections */
         section { padding: 8rem 5rem; }
@@ -248,52 +275,82 @@
             line-height: 1.1;
         }
 
-        .services-grid {
+        .services-grid, .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 2.5rem;
         }
-        .service-card {
+
+        .service-card, .portfolio-item {
             background: var(--color-light-gray);
-            padding: 3rem 2rem;
             border-radius: 12px;
+            overflow: hidden;
             box-shadow: 0 8px 30px rgba(0,0,0,0.08);
             transition: var(--transition);
-            text-align: center;
+            position: relative;
         }
-        .service-card:hover {
+
+        .service-card:hover, .portfolio-item:hover {
             transform: translateY(-12px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.12);
         }
-        .service-icon { font-size: 4.5rem; margin-bottom: 1.5rem; color: var(--color-accent); }
-        .service-img {
-            width: 100%; height: 220px; object-fit: cover; border-radius: 8px;
-            margin-bottom: 1.5rem;
+
+        .service-icon { font-size: 4.5rem; margin-bottom: 1.5rem; color: var(--color-accent); text-align: center; display: block; }
+
+        /* ── Image Optimization & Styling ── */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform var(--transition);
         }
 
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-            gap: 2rem;
+        .service-img, .portfolio-item img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 8px 8px 0 0;
         }
-        .portfolio-item {
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: var(--transition);
-        }
-        .portfolio-item:hover { transform: scale(1.04); }
+
         .portfolio-item img {
-            width: 100%; height: auto; display: block;
-            transition: var(--transition);
+            aspect-ratio: 16 / 10;
         }
-        .portfolio-item:hover img { transform: scale(1.08); }
 
+        .service-card picture, .portfolio-item picture {
+            display: block;
+        }
+
+        /* Shimmer placeholder while loading */
+        .service-img:not([src]), .portfolio-item img:not([src]) {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loadingShimmer 1.8s infinite;
+        }
+
+        @keyframes loadingShimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .service-card:hover .service-img,
+        .portfolio-item:hover img {
+            transform: scale(1.08);
+        }
+
+        img:focus {
+            outline: 3px solid var(--color-accent);
+            outline-offset: 4px;
+        }
+
+        /* Contact */
         .contact-content {
             display: grid;
             grid-template-columns: 1.3fr 0.7fr;
             gap: 6rem;
         }
+
         .contact-form input, .contact-form textarea {
             width: 100%; padding: 1.4rem; margin-bottom: 1.8rem;
             border: 1px solid var(--color-border);
@@ -301,6 +358,7 @@
             background: white;
             font-size: 1.1rem;
         }
+
         .submit-btn {
             background: var(--color-accent);
             color: white;
@@ -312,23 +370,38 @@
             border-radius: 6px;
             transition: var(--transition);
         }
+
         .submit-btn:hover { background: var(--color-accent-dark); }
 
-        /* Responsive Adjustments */
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: #f0f0f0;
+            color: var(--color-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* Responsive */
         @media (max-width: 1024px) {
             .navigation { padding: 1.2rem 2.5rem; }
             .nav-links { display: none; }
             .mobile-menu-btn { display: flex; }
             .contact-content { grid-template-columns: 1fr; gap: 4rem; }
             section { padding: 6rem 2.5rem; }
-            .hero-title { font-size: clamp(3.5rem, 12vw, 7rem); }
+            .hero { height: 85vh; }
+            .carousel-dots { bottom: 30px; }
+            .dot { width: 12px; height: 12px; }
         }
 
         @media (max-width: 600px) {
             .navigation { padding: 1rem 1.5rem; }
             .nav-logo-text { font-size: 1.8rem; }
             .mobile-menu { width: 100%; max-width: none; }
-            .hero { height: 85vh; }
+            .carousel-dots { bottom: 20px; gap: 10px; }
+            .dot { width: 10px; height: 10px; }
+            .service-img, .portfolio-item img { aspect-ratio: 16 / 10; }
         }
     </style>
 </head>
@@ -348,9 +421,7 @@
         <button class="nav-cta">Get Quote</button>
 
         <button class="mobile-menu-btn" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
     </nav>
 
@@ -397,6 +468,8 @@
                 </div>
             </div>
         </div>
+
+        <div class="carousel-dots" id="carouselDots"></div>
     </section>
 
     <!-- Services -->
@@ -406,22 +479,36 @@
         
         <div class="services-grid">
             <div class="service-card">
-                <img src="https://www.squaresigns.com/process/image/?src=https%3A%2F%2Fcdn.squaresigns.com%2Fimages%2Fproducts%2Fslider%2Ftravel-agency-dibond-signs.jpg&format=webp&quality=80" alt="Large Format Signage" class="service-img">
+                <picture>
+                    <source srcset="images/large-format-420w.avif 420w, images/large-format-800w.avif 800w, images/large-format-1200w.avif 1200w" sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 420px" type="image/avif">
+                    <source srcset="images/large-format-420w.webp 420w, images/large-format-800w.webp 800w, images/large-format-1200w.webp 1200w" sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 420px" type="image/webp">
+                    <img src="images/large-format-800w.jpg" alt="Large format signage and banners – vibrant durable prints" width="1200" height="900" loading="lazy" decoding="async" class="service-img">
+                </picture>
                 <span class="service-icon">🖨️</span>
                 <h3 class="service-title">Large Format Printing</h3>
                 <p>High-impact signage, banners, lightboxes, and industrial displays built to last in tough environments.</p>
             </div>
+
             <div class="service-card">
-                <img src="https://images.squarespace-cdn.com/content/v1/540b5a0ee4b0faf3641f967d/fa55f420-c81b-402b-a2b0-b0120040e064/Quincy+Van+Wrap.jpg" alt="Vehicle Wrap" class="service-img">
+                <picture>
+                    <source srcset="images/vehicle-wrap-420w.avif 420w, images/vehicle-wrap-800w.avif 800w, images/vehicle-wrap-1200w.avif 1200w" sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 420px" type="image/avif">
+                    <source srcset="images/vehicle-wrap-420w.webp 420w, images/vehicle-wrap-800w.webp 800w, images/vehicle-wrap-1200w.webp 1200w" sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 420px" type="image/webp">
+                    <img src="images/vehicle-wrap-800w.jpg" alt="Vehicle wrap branding on commercial fleet" width="1200" height="800" loading="lazy" decoding="async" class="service-img">
+                </picture>
                 <span class="service-icon">🚗</span>
                 <h3 class="service-title">Vehicle Branding</h3>
-                <p>Full or partial wraps that transform your fleet into powerful, moving advertisements with vibrant, durable graphics.</p>
+                <p>Full or partial wraps that transform your fleet into powerful, moving advertisements.</p>
             </div>
+
             <div class="service-card">
-                <img src="https://blog.designashirt.com/wp-content/uploads/Workplace-Safety-With-Custom-Safety-Vests-1024x576.png" alt="Branded PPE" class="service-img">
+                <picture>
+                    <source srcset="images/ppe-branding-420w.avif 420w, images/ppe-branding-800w.avif 800w, images/ppe-branding-1200w.avif 1200w" sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 420px" type="image/avif">
+                    <source srcset="images/ppe-branding-420w.webp 420w, images/ppe-branding-800w.webp 800w, images/ppe-branding-1200w.webp 1200w" sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 420px" type="image/webp">
+                    <img src="images/ppe-branding-800w.jpg" alt="Custom branded hi-vis PPE and workwear" width="1200" height="800" loading="lazy" decoding="async" class="service-img">
+                </picture>
                 <span class="service-icon">🦺</span>
                 <h3 class="service-title">Branding & PPE Supply</h3>
-                <p>Custom corporate apparel, hi-vis workwear, and SABS-compliant PPE printed with your brand for maximum visibility and professionalism.</p>
+                <p>Custom corporate apparel, hi-vis workwear, and SABS-compliant PPE printed with your brand.</p>
             </div>
         </div>
     </section>
@@ -432,10 +519,34 @@
         <h2 class="section-title">Our Work Gallery</h2>
         
         <div class="portfolio-grid">
-            <div class="portfolio-item"><img src="https://wrapsolutions.net/wp-content/uploads/2025/11/fleet-wrap-graphics-boston.jpg" alt="Fleet Wrap"></div>
-            <div class="portfolio-item"><img src="https://truckcolors.com/wp-content/uploads/van-vinyl-wrap.jpeg" alt="Van Branding"></div>
-            <div class="portfolio-item"><img src="https://www.squaresigns.com/process/image/?src=https%3A%2F%2Fcdn.squaresigns.com%2Fimages%2Fproducts%2Fslider%2Fdibond-signs-for-navigation.jpg&format=webp&quality=80" alt="Signage"></div>
-            <div class="portfolio-item"><img src="https://themerchlist.com/wp-content/uploads/2026/02/1.-Main-Custom-Printed-Industrial-Safety-Vest-Merchlist-Print-Your-Logo-on-Custom-Safety-Vest-for-Constriction-Oil-and-Gas-Companies-1200x675.png" alt="PPE Branding"></div>
+            <div class="portfolio-item">
+                <picture>
+                    <source srcset="images/fleet-wrap-420w.avif 420w, images/fleet-wrap-800w.avif 800w, images/fleet-wrap-1200w.avif 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/avif">
+                    <source srcset="images/fleet-wrap-420w.webp 420w, images/fleet-wrap-800w.webp 800w, images/fleet-wrap-1200w.webp 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/webp">
+                    <img src="images/fleet-wrap-800w.jpg" alt="Fleet wrap graphics example" width="1200" height="750" loading="lazy" decoding="async">
+                </picture>
+            </div>
+            <div class="portfolio-item">
+                <picture>
+                    <source srcset="images/van-wrap-420w.avif 420w, images/van-wrap-800w.avif 800w, images/van-wrap-1200w.avif 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/avif">
+                    <source srcset="images/van-wrap-420w.webp 420w, images/van-wrap-800w.webp 800w, images/van-wrap-1200w.webp 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/webp">
+                    <img src="images/van-wrap-800w.jpg" alt="Van vinyl wrap branding" width="1200" height="750" loading="lazy" decoding="async">
+                </picture>
+            </div>
+            <div class="portfolio-item">
+                <picture>
+                    <source srcset="images/signage-420w.avif 420w, images/signage-800w.avif 800w, images/signage-1200w.avif 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/avif">
+                    <source srcset="images/signage-420w.webp 420w, images/signage-800w.webp 800w, images/signage-1200w.webp 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/webp">
+                    <img src="images/signage-800w.jpg" alt="Dibond signage navigation display" width="1200" height="750" loading="lazy" decoding="async">
+                </picture>
+            </div>
+            <div class="portfolio-item">
+                <picture>
+                    <source srcset="images/safety-vest-420w.avif 420w, images/safety-vest-800w.avif 800w, images/safety-vest-1200w.avif 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/avif">
+                    <source srcset="images/safety-vest-420w.webp 420w, images/safety-vest-800w.webp 800w, images/safety-vest-1200w.webp 1200w" sizes="(max-width: 500px) 100vw, 420px" type="image/webp">
+                    <img src="images/safety-vest-800w.jpg" alt="Custom printed industrial safety vest" width="1200" height="750" loading="lazy" decoding="async">
+                </picture>
+            </div>
         </div>
     </section>
 
@@ -477,7 +588,7 @@
     </section>
 
     <!-- Footer -->
-    <footer style="padding:4rem 2rem; text-align:center; background:#f0f0f0; color:var(--color-muted); font-size:0.95rem; border-top:1px solid var(--color-border);">
+    <footer>
         © 2026 TAKEDI Modern Printers & Supply. All rights reserved.
     </footer>
 
@@ -491,7 +602,6 @@
             mobileMenu.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
@@ -499,25 +609,45 @@
             });
         });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', e => {
             if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                 menuToggle.classList.remove('active');
                 mobileMenu.classList.remove('active');
             }
         });
 
-        // Carousel Auto-slide
+        // Carousel + Dots
         const carousel = document.getElementById('carousel');
+        const dotsContainer = document.getElementById('carouselDots');
         let currentSlide = 0;
-        const totalSlides = carousel.children.length;
+        const slides = carousel.children;
+        const totalSlides = slides.length;
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentSlide = i;
+                updateCarousel();
+            });
+            dotsContainer.appendChild(dot);
+        }
+
+        const dots = dotsContainer.querySelectorAll('.dot');
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentSlide));
+        }
 
         function nextSlide() {
             currentSlide = (currentSlide + 1) % totalSlides;
-            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateCarousel();
         }
 
         setInterval(nextSlide, 6000);
+        updateCarousel();
     </script>
 </body>
 </html>
