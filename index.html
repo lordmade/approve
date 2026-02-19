@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-   
+  
     <style>
         :root {
             --color-bg: #fafafa;
@@ -19,13 +19,13 @@
             --color-light-gray: #f4f4f5;
             --color-border: #e4e4e7;
             --color-dark: #111;
-           
+          
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'Inter', sans-serif;
-           
+          
             --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
             --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-           
+          
             --nav-height: 70px;
             --nav-height-mobile: 60px;
             --section-padding: 6rem;
@@ -33,7 +33,7 @@
         }
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; }
-       
+      
         body {
             font-family: var(--font-body);
             background-color: var(--color-bg);
@@ -611,7 +611,7 @@
             }
         }
         .progress-bar.active { background: rgba(255,255,255,0.4); }
-       
+      
         .progress-fill {
             height: 100%;
             background: var(--color-accent);
@@ -1093,14 +1093,14 @@
         /* Utility Classes */
         .text-center { text-align: center; }
         .mt-2 { margin-top: 2rem; }
-       
+      
         /* Safe area for notched phones */
         @supports (padding: max(0px)) {
             .navigation {
                 padding-left: max(1.5rem, env(safe-area-inset-left));
                 padding-right: max(1.5rem, env(safe-area-inset-right));
             }
-           
+          
             section {
                 padding-left: max(1.5rem, env(safe-area-inset-left));
                 padding-right: max(1.5rem, env(safe-area-inset-right));
@@ -1117,7 +1117,7 @@
             <span class="nav-logo-text">TAKEDI</span>
         </a>
         <ul class="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="portfolio.html">Work</a></li>
             <li><a href="about.html">About</a></li>
@@ -1135,7 +1135,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
         <ul>
-            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="portfolio.html">Work</a></li>
             <li><a href="about.html">About</a></li>
@@ -1373,16 +1373,16 @@
         // Navbar Scroll Effect
         const navbar = document.getElementById('navbar');
         let lastScroll = 0;
-       
+      
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
-           
+          
             if (currentScroll > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-           
+          
             lastScroll = currentScroll;
         });
         // Hero Carousel with Progress
@@ -1397,15 +1397,15 @@
             slides.forEach((slide, i) => {
                 slide.classList.toggle('active', i === index);
             });
-           
+          
             progressBars.forEach((bar, i) => {
                 bar.classList.toggle('active', i === index);
             });
-           
+          
             progressFills.forEach((fill, i) => {
                 fill.style.width = i === index ? '0%' : '0%';
             });
-           
+          
             currentSlide = index;
             startProgress();
         }
@@ -1413,7 +1413,7 @@
             clearInterval(progressInterval);
             let progress = 0;
             const increment = 100 / (slideDuration / 50);
-           
+          
             progressInterval = setInterval(() => {
                 progress += increment;
                 if (progress >= 100) {
@@ -1465,6 +1465,23 @@
                 startAutoSlide();
             }
         });
+
+        // Dynamic Active Nav Link Highlighting (only the current page link is highlighted)
+        function setActiveNavLink() {
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            // Desktop nav
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === currentPath);
+            });
+            // Mobile menu
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === currentPath);
+            });
+        }
+        // Run on page load
+        window.addEventListener('load', setActiveNavLink);
+        // Also run if user navigates with browser back/forward
+        window.addEventListener('popstate', setActiveNavLink);
     </script>
 </body>
 </html>
