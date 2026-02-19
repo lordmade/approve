@@ -308,4 +308,306 @@
 
         .service-content > p {
             color: var(--color-muted); font-size: 1.05rem; line-height: 1.8;
-            margin-bottom:
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list {
+            list-style: none; margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            display: flex; align-items: flex-start; gap: 0.75rem;
+            margin-bottom: 1rem; color: var(--color-fg); font-size: 0.95rem;
+        }
+
+        .features-list li::before {
+            content: '✓'; color: var(--color-accent); font-weight: 700;
+            flex-shrink: 0; margin-top: 2px;
+        }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 1rem 2rem; font-family: var(--font-display); font-weight: 600;
+            font-size: 0.95rem; text-decoration: none; border-radius: 50px;
+            transition: all 0.3s var(--ease-out-expo); cursor: pointer; border: none;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            min-height: 52px; min-width: 140px;
+        }
+
+        .btn-primary {
+            background: var(--color-accent); color: white; width: 100%;
+        }
+
+        @media (min-width: 480px) { .btn-primary { width: auto; } }
+
+        .btn-primary:hover, .btn-primary:active {
+            background: var(--color-accent-light); transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,107,0,0.3);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+            color: white; text-align: center; padding: 4rem 1.5rem;
+        }
+
+        @media (min-width: 769px) { .cta-section { padding: 5rem 4rem; } }
+
+        .cta-section h2 {
+            font-family: var(--font-display); font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 700; margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem; opacity: 0.95; margin-bottom: 2rem;
+            max-width: 600px; margin-left: auto; margin-right: auto;
+        }
+
+        .btn-white {
+            background: white; color: var(--color-fg); min-width: 180px;
+        }
+
+        .btn-white:hover, .btn-white:active { background: var(--color-fg); color: white; }
+
+        /* Footer */
+        footer {
+            background: #050505; color: rgba(255,255,255,0.5);
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        @media (min-width: 769px) { footer { padding: 4rem 4rem 2rem; } }
+
+        .footer-content {
+            max-width: 1400px; margin: 0 auto; display: flex;
+            flex-direction: column; gap: 2rem; text-align: center;
+        }
+
+        @media (min-width: 769px) {
+            .footer-content {
+                flex-direction: row; justify-content: space-between;
+                align-items: center; text-align: left;
+            }
+        }
+
+        .footer-logo {
+            font-family: var(--font-display); font-size: 1.5rem;
+            font-weight: 700; color: white;
+        }
+
+        .footer-links {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 1.5rem; list-style: none;
+        }
+
+        @media (min-width: 769px) { .footer-links { gap: 2rem; } }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            font-size: 0.9rem; transition: color 0.3s ease; padding: 0.5rem;
+        }
+
+        .footer-links a:hover { color: var(--color-accent); }
+
+        .footer-bottom {
+            margin-top: 2rem; padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem; text-align: center;
+        }
+
+        @media (min-width: 769px) { .footer-bottom { margin-top: 3rem; } }
+
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @supports (padding: max(0px)) {
+            .navigation {
+                padding-left: max(1.5rem, env(safe-area-inset-left));
+                padding-right: max(1.5rem, env(safe-area-inset-right));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="navigation" id="navbar">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icon">T</div>
+            <span class="nav-logo-text">TAKEDI</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="portfolio.html">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <a href="contact.html" class="nav-cta"><span>Get Quote</span></a>
+
+        <button class="mobile-menu-btn" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="menuOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html" class="active">Services</a></li>
+            <li><a href="portfolio.html">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="mobile-menu-cta">Get Free Quote</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="reveal">
+            <span class="page-label">What We Offer</span>
+            <h1 class="page-title">Our Services</h1>
+            <p class="page-description">Comprehensive industrial branding solutions tailored for mining, construction, and commercial sectors.</p>
+        </div>
+    </header>
+
+    <!-- Services Detail -->
+    <section class="services-detail">
+        <div class="service-detail-card reveal" id="large-format">
+            <div class="service-content">
+                <h2><span class="service-icon-large">🖨️</span> Large Format Printing</h2>
+                <p>High-impact signage and displays built to withstand harsh industrial environments. Our UV-resistant inks and premium substrates ensure your brand remains vibrant for years.</p>
+                <ul class="features-list">
+                    <li>UV-resistant outdoor banners and billboards</li>
+                    <li>Corrugated plastic and dibond signage</li>
+                    <li>Backlit displays and lightboxes</li>
+                    <li>Industrial safety signage and wayfinding</li>
+                    <li>Mesh banners for construction sites</li>
+                </ul>
+                <a href="contact.html?service=printing" class="btn btn-primary">Request Quote</a>
+            </div>
+            <div class="service-image-wrap">
+                <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Large format printing">
+            </div>
+        </div>
+
+        <div class="service-detail-card reveal" id="vehicle">
+            <div class="service-content">
+                <h2><span class="service-icon-large">🚗</span> Vehicle Branding</h2>
+                <p>Transform your fleet into mobile billboards with our premium vehicle wrapping services. From single vans to entire mining fleets, we deliver consistent, durable branding.</p>
+                <ul class="features-list">
+                    <li>Full and partial vehicle wraps</li>
+                    <li>Cast vinyl with 7+ year durability</li>
+                    <li>Custom fleet graphics and decals</li>
+                    <li>Window perforation graphics</li>
+                    <li>Protective paint protection film</li>
+                </ul>
+                <a href="contact.html?service=vehicle" class="btn btn-primary">Request Quote</a>
+            </div>
+            <div class="service-image-wrap">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80" alt="Vehicle branding">
+            </div>
+        </div>
+
+        <div class="service-detail-card reveal" id="ppe">
+            <div class="service-content">
+                <h2><span class="service-icon-large">🦺</span> Branded PPE & Workwear</h2>
+                <p>SABS-compliant safety equipment and corporate workwear with industrial-grade branding. We ensure your team stays safe while representing your brand professionally.</p>
+                <ul class="features-list">
+                    <li>Hi-vis vests and jackets with reflective branding</li>
+                    <li>Industrial workwear embroidery</li>
+                    <li>Safety helmets and hard hats</li>
+                    <li>Corporate uniforms and apparel</li>
+                    <li>Bulk supply and inventory management</li>
+                </ul>
+                <a href="contact.html?service=ppe" class="btn btn-primary">Request Quote</a>
+            </div>
+            <div class="service-image-wrap">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="PPE branding">
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="reveal">
+            <h2>Need a Custom Solution?</h2>
+            <p>We specialize in tailoring our services to meet your specific industrial branding requirements.</p>
+            <a href="contact.html" class="btn btn-white">Discuss Your Project</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">TAKEDI</div>
+            <ul class="footer-links">
+                <li><a href="services.html">Services</a></li>
+                <li><a href="portfolio.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TAKEDI Modern Printers & Supply. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const body = document.body;
+
+        function openMenu() {
+            menuToggle.classList.add('active');
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            body.style.overflow = 'hidden';
+            menuToggle.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeMenu() {
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            body.style.overflow = '';
+            menuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.contains('active') ? closeMenu() : openMenu();
+        });
+
+        menuOverlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) closeMenu();
+        });
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
