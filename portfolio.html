@@ -2,561 +2,636 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TAKEDI | Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Portfolio | TAKEDI Industrial Branding</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --color-bg: #0b0b0b;
-            --color-fg: #ffffff;
-            --color-accent: #ff8c00;
-            --color-accent-dark: #e67e00;
-            --color-accent-light: #ffa94d;
-            --color-muted: rgba(255, 255, 255, 0.6);
-            --color-muted-dark: rgba(255, 255, 255, 0.1);
-           
-            --font-display: 'Montserrat', sans-serif;
-            --font-body: 'Open Sans', sans-serif;
-           
-            --transition-fast: 0.2s ease;
-            --transition-medium: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            --transition-slow: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            --color-bg: #fafafa;
+            --color-fg: #0a0a0a;
+            --color-accent: #ff6b00;
+            --color-accent-light: #ff8533;
+            --color-accent-dark: #cc5500;
+            --color-muted: #666;
+            --color-light-gray: #f4f4f5;
+            --color-border: #e4e4e7;
+            --color-dark: #111;
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            
+            --nav-height: 70px;
+            --nav-height-mobile: 60px;
         }
+
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-       
-        html { scroll-behavior: smooth; font-size: 16px; }
-       
+        html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%; }
+        
         body {
             font-family: var(--font-body);
             background-color: var(--color-bg);
             color: var(--color-fg);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-       
-        /* --- Grain & Background Effects --- */
+
+        @media (max-width: 768px) { html { font-size: 15px; } }
+        @media (max-width: 380px) { html { font-size: 14px; } }
+
         .grain-overlay {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            pointer-events: none; z-index: 9990; opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
-        .bg-glow {
-            position: fixed; top: 50%; left: 50%; width: 60vw; height: 60vw;
-            background: radial-gradient(circle, rgba(255,140,0,0.08) 0%, rgba(0,0,0,0) 70%);
-            transform: translate(-50%, -50%);
-            pointer-events: none; z-index: -1;
-        }
-        /* --- Navigation --- */
+
+        /* Navigation */
         .navigation {
-            position: fixed; top:0; left:0; width:100%;
-            padding: 1.5rem 4rem;
+            position: fixed; top: 0; left: 0; width: 100%;
+            height: var(--nav-height); padding: 0 1.5rem;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 100;
-            transition: all var(--transition-medium);
+            background: rgba(250,250,250,0.95);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.4s var(--ease-out-expo);
         }
-        .navigation.scrolled {
-            padding: 1rem 4rem;
-            background: rgba(11, 11, 11, 0.95);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--color-muted-dark);
+
+        @media (min-width: 769px) { .navigation { padding: 0 4rem; } }
+
+        .nav-logo {
+            display: flex; align-items: center; gap: 0.5rem;
+            text-decoration: none; z-index: 1100;
         }
+
+        .nav-logo-icon {
+            width: 36px; height: 36px; background: var(--color-accent);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 1.1rem;
+            transform: rotate(-5deg); transition: transform 0.3s var(--ease-out-expo);
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 769px) { .nav-logo-icon { width: 40px; height: 40px; font-size: 1.2rem; } }
+
+        .nav-logo:hover .nav-logo-icon { transform: rotate(0deg) scale(1.1); }
+
         .nav-logo-text {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 900;
-            letter-spacing: 0.05em;
-            color: var(--color-fg);
-            text-transform: uppercase;
-            line-height: 1;
+            font-family: var(--font-display); font-size: 1.5rem;
+            font-weight: 700; color: var(--color-fg); letter-spacing: -0.02em;
         }
-        .nav-links { display: flex; list-style: none; gap: 3rem; }
-        .nav-links a {
-            font-family: var(--font-display); font-size: 0.8rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-fg);
-            text-decoration: none; position: relative;
+
+        @media (min-width: 769px) { .nav-logo-text { font-size: 1.8rem; } }
+
+        .nav-links { display: none; }
+
+        @media (min-width: 769px) {
+            .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+            .nav-links a {
+                font-family: var(--font-display); font-weight: 500; color: var(--color-muted);
+                text-decoration: none; font-size: 0.9rem; letter-spacing: 0.02em;
+                position: relative; transition: color 0.3s ease; padding: 0.5rem 0;
+            }
+            .nav-links a::after {
+                content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+                background: var(--color-accent); transition: width 0.3s var(--ease-out-expo);
+            }
+            .nav-links a:hover, .nav-links a.active { color: var(--color-fg); }
+            .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+            .nav-links a.active { color: var(--color-accent); }
         }
-        .nav-links a::after {
-            content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px;
-            background: var(--color-accent); transition: width 0.3s ease;
+
+        .nav-cta { display: none; }
+
+        @media (min-width: 769px) {
+            .nav-cta {
+                display: block; padding: 0.8rem 1.8rem; background: var(--color-fg);
+                color: white; border: none; font-family: var(--font-display);
+                font-weight: 600; font-size: 0.85rem; cursor: pointer;
+                border-radius: 50px; transition: all 0.3s var(--ease-out-expo);
+                position: relative; overflow: hidden; text-decoration: none;
+            }
+            .nav-cta::before {
+                content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+                background: var(--color-accent); transform: translateX(-100%);
+                transition: transform 0.3s var(--ease-out-expo); z-index: 0;
+            }
+            .nav-cta:hover::before { transform: translateX(0); }
+            .nav-cta span { position: relative; z-index: 1; }
         }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        .nav-cta {
-            font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 0.1em;
-            padding: 0.8rem 1.8rem; background: var(--color-accent);
-            border: none; color: var(--color-bg);
-            cursor: pointer; transition: all 0.3s ease;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+
+        .mobile-menu-btn {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            width: 48px; height: 48px; gap: 6px; background: none; border: none;
+            cursor: pointer; z-index: 1100; padding: 12px;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
         }
-        /* --- Portfolio Hero --- */
-        .portfolio-hero {
-            position: relative;
-            height: 85vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        @media (min-width: 769px) { .mobile-menu-btn { display: none; } }
+
+        .mobile-menu-btn span {
+            width: 26px; height: 2.5px; background: var(--color-fg);
+            border-radius: 2px; transition: all 0.3s var(--ease-out-expo);
+            transform-origin: center;
         }
-        .portfolio-hero .hero-bg-image {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: linear-gradient(to bottom, rgba(11,11,11,0.65), rgba(11,11,11,0.9)),
-                              url('https://i.postimg.cc/WpmYNckK/Screenshot-2026-02-18-152539.png');
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-            transform: scale(1.1);
+
+        .mobile-menu-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px); z-index: 1040;
+            opacity: 0; visibility: hidden; transition: all 0.4s ease;
         }
-        .portfolio-hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 900px;
+
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+
+        .mobile-menu {
+            position: fixed; top: 0; right: -100%; width: 85%; max-width: 360px;
+            height: 100vh; height: 100dvh; background: var(--color-fg); z-index: 1050;
+            padding: 6rem 2rem 2rem; transition: right 0.5s var(--ease-out-expo);
+            display: flex; flex-direction: column; overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
-        .portfolio-hero-content .section-label {
-            color: var(--color-accent);
-            font-weight: 700;
-            letter-spacing: 0.4em;
-            font-size: 1.1rem;
+
+        .mobile-menu.active { right: 0; }
+
+        .mobile-menu ul {
+            list-style: none; display: flex; flex-direction: column; gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-menu a {
+            font-family: var(--font-display); font-size: 1.75rem; font-weight: 600;
+            color: white; text-decoration: none; display: block; padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transform: translateX(30px); opacity: 0;
+            transition: all 0.4s var(--ease-out-expo);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-menu.active a { transform: translateX(0); opacity: 1; }
+
+        .mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+        .mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
+
+        .mobile-menu a:hover, .mobile-menu a.active { color: var(--color-accent); padding-left: 0.5rem; }
+
+        .mobile-menu-cta {
+            margin-top: auto; padding: 1.2rem; background: var(--color-accent);
+            color: white; border: none; font-family: var(--font-display);
+            font-weight: 600; font-size: 1.1rem; border-radius: 12px;
+            cursor: pointer; text-decoration: none; text-align: center;
+            transform: translateY(20px); opacity: 0;
+            transition: all 0.4s var(--ease-out-expo) 0.35s;
+            touch-action: manipulation;
+        }
+
+        .mobile-menu.active .mobile-menu-cta { transform: translateY(0); opacity: 1; }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg); background: white;
+        }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg); background: white;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: calc(var(--nav-height-mobile) + 3rem) 1.5rem 3rem;
+            background: linear-gradient(135deg, var(--color-fg) 0%, #1a1a1a 100%);
+            color: white; text-align: center;
+        }
+
+        @media (min-width: 769px) {
+            .page-header {
+                padding: calc(var(--nav-height) + 5rem) 4rem 5rem;
+                text-align: left;
+            }
+        }
+
+        .page-label {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+            font-family: var(--font-display); font-size: 0.75rem; font-weight: 600;
+            letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent);
             margin-bottom: 1rem;
         }
-        .portfolio-hero-content h1 {
-            font-family: var(--font-display);
-            font-size: clamp(4rem, 10vw, 9rem);
-            font-weight: 900;
-            letter-spacing: -0.03em;
-            line-height: 0.95;
-            text-transform: uppercase;
+
+        @media (min-width: 769px) { .page-label { font-size: 0.85rem; } }
+
+        .page-label::before {
+            content: ''; width: 30px; height: 2px; background: var(--color-accent);
         }
-        /* --- Filters (pill shape + animation) --- */
-        .filters {
-            padding: 4rem 4rem 2rem;
-            background: #050505;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
+
+        @media (min-width: 769px) { .page-label::before { width: 40px; } }
+
+        .page-title {
+            font-family: var(--font-display); font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+            margin-bottom: 1rem;
         }
+
+        .page-description {
+            font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 600px;
+            margin: 0 auto; line-height: 1.7;
+        }
+
+        @media (min-width: 769px) {
+            .page-description { font-size: 1.25rem; margin: 0; }
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex; gap: 0.5rem; padding: 1.5rem;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; background: white;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky; top: var(--nav-height-mobile); z-index: 100;
+        }
+
+        @media (min-width: 769px) {
+            .filter-tabs {
+                justify-content: center; gap: 1rem;
+                padding: 2rem 4rem; top: var(--nav-height);
+            }
+        }
+
+        .filter-tabs::-webkit-scrollbar { display: none; }
+
         .filter-btn {
-            padding: 0.85rem 2.8rem;
-            background: transparent;
-            border: 1px solid var(--color-muted-dark);
-            color: var(--color-fg);
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 50px;
+            padding: 0.75rem 1.25rem; background: transparent;
+            border: 1px solid var(--color-border); border-radius: 50px;
+            font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+            color: var(--color-muted); cursor: pointer; white-space: nowrap;
+            transition: all 0.3s ease; touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent; flex-shrink: 0;
         }
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--color-accent);
-            border-color: var(--color-accent);
-            color: var(--color-bg);
-            transform: scale(1.06);
+
+        @media (min-width: 769px) { .filter-btn { padding: 0.875rem 1.75rem; } }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--color-accent); border-color: var(--color-accent);
+            color: white;
         }
-        /* --- Portfolio Grid --- */
+
+        /* Portfolio Grid */
+        .portfolio-grid-section { padding: 2rem 1.5rem 4rem; }
+
+        @media (min-width: 769px) { .portfolio-grid-section { padding: 4rem 4rem 6rem; } }
+
         .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-            gap: 1.8rem;
-            padding: 2rem 4rem 8rem;
-            background: #050505;
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem;
         }
+
+        @media (min-width: 640px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+
         .portfolio-card {
-            position: relative;
-            aspect-ratio: 16/10;
-            overflow: hidden;
-            background: #1a1a1a;
-            border-radius: 4px;
-            cursor: pointer;
+            position: relative; border-radius: 16px; overflow: hidden;
+            cursor: pointer; background: var(--color-light-gray);
+            aspect-ratio: 4/5; touch-action: manipulation;
         }
+
+        @media (min-width: 769px) { .portfolio-card { border-radius: 20px; } }
+
         .portfolio-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(50%);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s var(--ease-out-expo);
         }
-        .portfolio-card:hover img {
-            transform: scale(1.12);
-            filter: grayscale(0%);
+
+        .portfolio-card:hover img { transform: scale(1.1); }
+
+        .portfolio-card-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 70%);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 1.5rem; opacity: 1;
         }
-        .portfolio-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.92));
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 2.5rem 2rem 2rem;
-            opacity: 0;
-            transition: all 0.5s ease;
+
+        @media (min-width: 769px) {
+            .portfolio-card-overlay {
+                opacity: 0; transition: opacity 0.4s ease;
+            }
+            .portfolio-card:hover .portfolio-card-overlay { opacity: 1; }
         }
-        .portfolio-card:hover .portfolio-overlay {
-            opacity: 1;
+
+        .portfolio-card-category {
+            font-family: var(--font-display); font-size: 0.75rem; font-weight: 600;
+            color: var(--color-accent); text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 0.5rem;
         }
-        .portfolio-overlay .category {
-            color: var(--color-accent);
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
+
+        .portfolio-card-title {
+            font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: white;
         }
-        .portfolio-overlay h3 {
-            font-family: var(--font-display);
-            font-size: 1.65rem;
-            font-weight: 800;
-            line-height: 1.1;
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+            color: white; text-align: center; padding: 4rem 1.5rem;
         }
-        /* --- Reveal --- */
-        .reveal { opacity: 0; transform: translateY(60px); transition: all 1.2s cubic-bezier(0.25,1,0.5,1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        /* --- Modal --- */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 10000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background: rgba(11,11,11,0.98);
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
+
+        @media (min-width: 769px) { .cta-section { padding: 5rem 4rem; } }
+
+        .cta-section h2 {
+            font-family: var(--font-display); font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 700; margin-bottom: 1rem;
         }
-        .modal-content {
-            max-width: 1100px;
-            width: 100%;
-            background: #111;
-            border: 1px solid var(--color-muted-dark);
-            position: relative;
+
+        .cta-section p {
+            font-size: 1.1rem; opacity: 0.95; margin-bottom: 2rem;
+            max-width: 600px; margin-left: auto; margin-right: auto;
         }
-        .modal-content img {
-            width: 100%;
-            display: block;
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 1rem 2rem; font-family: var(--font-display); font-weight: 600;
+            font-size: 0.95rem; text-decoration: none; border-radius: 50px;
+            transition: all 0.3s var(--ease-out-expo); cursor: pointer; border: none;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            min-height: 52px; min-width: 140px;
         }
-        .modal-info {
-            padding: 2.5rem;
+
+        .btn-white {
+            background: white; color: var(--color-fg);
         }
-        .modal-info h2 {
-            font-family: var(--font-display);
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-        .close-modal {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            font-size: 2.2rem;
-            color: var(--color-accent);
-            cursor: pointer;
-            line-height: 1;
-        }
-        /* --- PROFESSIONAL FOOTER (only part changed) --- */
+
+        .btn-white:hover, .btn-white:active { background: var(--color-fg); color: white; }
+
+        /* Footer */
         footer {
-            background: #050505;
-            border-top: 1px solid var(--color-muted-dark);
+            background: #050505; color: rgba(255,255,255,0.5);
+            padding: 3rem 1.5rem 2rem;
         }
-        .footer-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2.2fr 1fr 1.2fr;
-            gap: 5rem;
-            padding: 6rem 4rem 4rem;
+
+        @media (min-width: 769px) { footer { padding: 4rem 4rem 2rem; } }
+
+        .footer-content {
+            max-width: 1400px; margin: 0 auto; display: flex;
+            flex-direction: column; gap: 2rem; text-align: center;
         }
-        .footer-brand .nav-logo-text {
-            font-size: 2.6rem;
-            display: block;
-            margin-bottom: 0.8rem;
+
+        @media (min-width: 769px) {
+            .footer-content {
+                flex-direction: row; justify-content: space-between;
+                align-items: center; text-align: left;
+            }
         }
-        .footer-brand p {
-            color: var(--color-muted);
-            max-width: 320px;
-            line-height: 1.7;
-            margin-bottom: 1rem;
+
+        .footer-logo {
+            font-family: var(--font-display); font-size: 1.5rem;
+            font-weight: 700; color: white;
         }
-        .footer-links h4,
-        .footer-contact h4 {
-            color: var(--color-accent);
-            font-family: var(--font-display);
-            font-size: 0.95rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 1.8rem;
+
+        .footer-links {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 1.5rem; list-style: none;
         }
-        .footer-links ul {
-            list-style: none;
-        }
+
+        @media (min-width: 769px) { .footer-links { gap: 2rem; } }
+
         .footer-links a {
-            color: var(--color-muted);
-            text-decoration: none;
-            display: block;
-            padding: 0.55rem 0;
-            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            font-size: 0.9rem; transition: color 0.3s ease; padding: 0.5rem;
         }
-        .footer-links a:hover {
-            color: var(--color-fg);
-            padding-left: 0.8rem;
-        }
-        .footer-contact p {
-            color: var(--color-muted);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-        .footer-contact a {
-            color: var(--color-muted);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .footer-contact a:hover {
-            color: var(--color-accent);
-        }
+
+        .footer-links a:hover { color: var(--color-accent); }
+
         .footer-bottom {
-            border-top: 1px solid var(--color-muted-dark);
-            padding: 2rem 4rem;
-            text-align: center;
-            font-size: 0.82rem;
-            color: var(--color-muted);
-            opacity: 0.7;
+            margin-top: 2rem; padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem; text-align: center;
         }
-        /* Mobile */
-        .mobile-menu-btn { display: none; }
-        @media (max-width: 1024px) {
-            .navigation { padding: 1.2rem 2rem; }
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: flex; flex-direction: column; gap: 6px; }
-            .mobile-menu-btn span { width: 32px; height: 2px; background: white; }
-            .portfolio-grid { padding: 2rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
-            .filters { padding: 3rem 2rem 1.5rem; }
-            .footer-inner {
-                grid-template-columns: 1fr;
-                gap: 3.5rem;
-                padding: 4rem 2rem 3rem;
+
+        @media (min-width: 769px) { .footer-bottom { margin-top: 3rem; } }
+
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @supports (padding: max(0px)) {
+            .navigation {
+                padding-left: max(1.5rem, env(safe-area-inset-left));
+                padding-right: max(1.5rem, env(safe-area-inset-right));
             }
         }
     </style>
 </head>
 <body>
     <div class="grain-overlay"></div>
-    <div class="bg-glow"></div>
+
     <!-- Navigation -->
-    <nav class="navigation">
-        <a href="index.html" style="text-decoration: none;">
+    <nav class="navigation" id="navbar">
+        <a href="index.html" class="nav-logo">
+            <div class="nav-logo-icon">T</div>
             <span class="nav-logo-text">TAKEDI</span>
         </a>
+
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="index.html#services">Services</a></li>
-            <li><a href="portfolio.html" class="active">Portfolio</a></li>
-            <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html" class="active">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
-        <button class="nav-cta">Get Quote</button>
-        <button class="mobile-menu-btn">
+
+        <a href="contact.html" class="nav-cta"><span>Get Quote</span></a>
+
+        <button class="mobile-menu-btn" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
             <span></span><span></span><span></span>
         </button>
     </nav>
-    <!-- Portfolio Hero -->
-    <section class="portfolio-hero">
-        <div class="hero-bg-image"></div>
-        <div class="portfolio-hero-content">
-            <span class="section-label">SHOWCASE OF EXCELLENCE</span>
-            <h1>Our Work</h1>
-            <p style="margin-top: 2rem; font-size: 1.25rem; max-width: 620px; margin-left: auto; margin-right: auto; opacity: 0.9;">
-                Premium industrial printing &amp; branding that turns vehicles, sites, and teams into powerful brand statements.
-            </p>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="menuOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html" class="active">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="mobile-menu-cta">Get Free Quote</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="reveal">
+            <span class="page-label">Our Work</span>
+            <h1 class="page-title">Portfolio</h1>
+            <p class="page-description">Explore our recent industrial branding projects across mining, construction, and commercial sectors.</p>
         </div>
-    </section>
-    <!-- Filters -->
-    <div class="filters">
+    </header>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
         <button class="filter-btn active" data-filter="all">All Projects</button>
         <button class="filter-btn" data-filter="vehicle">Vehicle Branding</button>
-        <button class="filter-btn" data-filter="signage">Large Format &amp; Signage</button>
-        <button class="filter-btn" data-filter="ppe">PPE &amp; Apparel</button>
+        <button class="filter-btn" data-filter="signage">Signage</button>
+        <button class="filter-btn" data-filter="ppe">PPE & Workwear</button>
+        <button class="filter-btn" data-filter="commercial">Commercial</button>
     </div>
+
     <!-- Portfolio Grid -->
-    <div class="portfolio-grid" id="portfolioGrid">
-       
-        <!-- Project 1 -->
-        <div class="portfolio-card reveal" data-category="signage" onclick="openModal(1)">
-            <img src="https://mksigns.com/cdn/shop/files/msdANilPKaf_1.png?v=1761281030&width=1946" alt="Mining Signage">
-            <div class="portfolio-overlay">
-                <div class="category">Large Format &amp; Signage</div>
-                <h3>Mining Directional System</h3>
+    <section class="portfolio-grid-section">
+        <div class="portfolio-grid" id="portfolioGrid">
+            <div class="portfolio-card reveal" data-category="vehicle">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80" alt="Mining fleet">
+                <div class="portfolio-card-overlay">
+                    <span class="portfolio-card-category">Vehicle Branding</span>
+                    <h3 class="portfolio-card-title">Mining Fleet Rebrand</h3>
+                </div>
+            </div>
+            <div class="portfolio-card reveal" data-category="signage" style="transition-delay: 0.1s;">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80" alt="Industrial signage">
+                <div class="portfolio-card-overlay">
+                    <span class="portfolio-card-category">Signage</span>
+                    <h3 class="portfolio-card-title">Industrial Wayfinding</h3>
+                </div>
+            </div>
+            <div class="portfolio-card reveal" data-category="ppe" style="transition-delay: 0.2s;">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Safety vests">
+                <div class="portfolio-card-overlay">
+                    <span class="portfolio-card-category">PPE Branding</span>
+                    <h3 class="portfolio-card-title">Safety Program Launch</h3>
+                </div>
+            </div>
+            <div class="portfolio-card reveal" data-category="commercial">
+                <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Commercial wrap">
+                <div class="portfolio-card-overlay">
+                    <span class="portfolio-card-category">Commercial</span>
+                    <h3 class="portfolio-card-title">Delivery Fleet Wrap</h3>
+                </div>
+            </div>
+            <div class="portfolio-card reveal" data-category="vehicle" style="transition-delay: 0.1s;">
+                <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80" alt="Van wrap">
+                <div class="portfolio-card-overlay">
+                    <span class="portfolio-card-category">Vehicle Branding</span>
+                    <h3 class="portfolio-card-title">Commercial Van Fleet</h3>
+                </div>
+            </div>
+            <div class="portfolio-card reveal" data-category="signage" style="transition-delay: 0.2s;">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="Office branding">
+                <div class="portfolio-card-overlay">
+                    <span class="portfolio-card-category">Signage</span>
+                    <h3 class="portfolio-card-title">Corporate Environment</h3>
+                </div>
             </div>
         </div>
-        <!-- Project 2 -->
-        <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(2)">
-            <img src="https://i.postimg.cc/NGZc2HGz/car.png">
-            <div class="portfolio-overlay">
-                <div class="category">Vehicle Branding</div>
-                <h3>PestPro Fleet Wrap</h3>
-            </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="reveal">
+            <h2>Have a Project in Mind?</h2>
+            <p>Let's discuss how we can bring your industrial branding vision to life.</p>
+            <a href="contact.html" class="btn btn-white">Start Your Project</a>
         </div>
-        <!-- Project 3 -->
-        <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(3)">
-            <img src="https://www.protoolreviews.com/wp-content/uploads/2022/02/Milwaukee-Branded-PPE.jpg" alt="Branded PPE">
-            <div class="portfolio-overlay">
-                <div class="category">PPE &amp; Apparel</div>
-                <h3>Milwaukee Safety Range</h3>
-            </div>
-        </div>
-        <!-- Project 4 -->
-        <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(4)">
-            <img src="https://totallyyourstitch.com/cdn/shop/products/ladiespolologo.jpg?v=1720811173&width=1445" alt="Corporate Polos">
-            <div class="portfolio-overlay">
-                <div class="category">PPE &amp; Apparel</div>
-                <h3>Corporate Polo Collection</h3>
-            </div>
-        </div>
-        <!-- Project 5 -->
-        <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(5)">
-            <img src="https://wraps.co.za/wp-content/uploads/2022/08/full-fleet-wrap-mining.jpg" alt="Mining Fleet">
-            <div class="portfolio-overlay">
-                <div class="category">Vehicle Branding</div>
-                <h3>Anglo American Fleet</h3>
-            </div>
-        </div>
-        <!-- Project 6 -->
-        <div class="portfolio-card reveal" data-category="signage" onclick="openModal(6)">
-            <img src="https://i.postimg.cc/htpZxkbx/signage.png" alt="Safety Signage">
-            <div class="portfolio-overlay">
-                <div class="category">Large Format &amp; Signage</div>
-                <h3>Platinum Mine Hazard Boards</h3>
-            </div>
-        </div>
-        <!-- Project 7 -->
-        <div class="portfolio-card reveal" data-category="ppe" onclick="openModal(7)">
-            <img src="https://i.postimg.cc/RhpqwVFR/wall.png" alt="Hi-Vis Apparel">
-            <div class="portfolio-overlay">
-                <div class="category">PPE &amp; Apparel</div>
-                <h3>Full Hi-Vis Corporate Range</h3>
-            </div>
-        </div>
-        <!-- Project 8 -->
-        <div class="portfolio-card reveal" data-category="vehicle" onclick="openModal(8)">
-            <img src="https://i.postimg.cc/25gw7rq1/Screenshot-from-2026-02-18-16-19-18.png" alt="Heavy Haulage">
-            <div class="portfolio-overlay">
-                <div class="category">Large Format &amp; Signage/div>
-                <h3>Heavy Haulage Tipper Fleet</h3>
-            </div>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal" id="projectModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">×</span>
-            <img id="modalImage" src="" alt="">
-            <div class="modal-info">
-                <div id="modalCategory" class="category" style="font-size:1rem;"></div>
-                <h2 id="modalTitle"></h2>
-                <p id="modalDesc" style="color:var(--color-muted); line-height:1.7; font-size:1.05rem;">
-                    Premium execution with SABS-compliant materials, 3M reflective technology, and 5-year warranty on all prints.
-                </p>
-            </div>
-        </div>
-    </div>
-    <!-- PROFESSIONAL FOOTER -->
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <div class="footer-inner">
-            <!-- Brand -->
-            <div class="footer-brand">
-                <span class="nav-logo-text">TAKEDI</span>
-                <p>Modern Printers &amp; Supply</p>
-                <p>Premium industrial printing and branding solutions engineered for the mining, construction, and commercial sectors across South Africa.</p>
-            </div>
-            <!-- Quick Links -->
-            <div class="footer-links">
-                <h4>Explore</h4>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="index.html#services">Services</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
-                    <li><a href="index.html#about">About Us</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </div>
-            <!-- Contact -->
-            <div class="footer-contact">
-                <h4>Contact Info</h4>
-                <p>15 Nelson Mandela Street<br>Mokopane, Limpopo 0600</p>
-                <p><a href="mailto:info@takedi.co.za">info@takedi.co.za</a></p>
-                <p><a href="tel:+27607118356">060 711 8356</a></p>
-            </div>
+        <div class="footer-content">
+            <div class="footer-logo">TAKEDI</div>
+            <ul class="footer-links">
+                <li><a href="services.html">Services</a></li>
+                <li><a href="portfolio.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
         </div>
         <div class="footer-bottom">
-            © 2026 TAKEDI MODERN PRINTERS &amp; SUPPLY. All Rights Reserved.
+            <p>&copy; 2026 TAKEDI Modern Printers & Supply. All rights reserved.</p>
         </div>
     </footer>
+
     <script>
-        // Reveal Animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.15 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        // Nav Scroll
-        window.addEventListener('scroll', () => {
-            document.querySelector('.navigation').classList.toggle('scrolled', window.scrollY > 50);
+        // Mobile Menu
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const body = document.body;
+
+        function openMenu() {
+            menuToggle.classList.add('active');
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            body.style.overflow = 'hidden';
+            menuToggle.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeMenu() {
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            body.style.overflow = '';
+            menuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.contains('active') ? closeMenu() : openMenu();
         });
-        // Portfolio Filter
+
+        menuOverlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) closeMenu();
+        });
+
+        // Filter Functionality
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.portfolio-card');
+        const portfolioCards = document.querySelectorAll('.portfolio-card');
+
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                const filterValue = btn.getAttribute('data-filter');
-                cards.forEach(card => {
-                    if (filterValue === 'all') {
+                
+                const filter = btn.getAttribute('data-filter');
+                
+                portfolioCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
                         card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 10);
                     } else {
-                        card.style.display = card.getAttribute('data-category') === filterValue ? 'block' : 'none';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
                     }
                 });
             });
         });
-        // Modal
-        let currentModal = 0;
-        function openModal(id) {
-            currentModal = id;
-            const modal = document.getElementById('projectModal');
-            const img = document.getElementById('modalImage');
-            const titleEl = document.getElementById('modalTitle');
-            const catEl = document.getElementById('modalCategory');
-            const card = document.querySelector(`.portfolio-card[onclick="openModal(${id})"]`);
-            const imgSrc = card.querySelector('img').src;
-            const title = card.querySelector('h3').innerText;
-            const cat = card.querySelector('.category').innerText;
-            img.src = imgSrc;
-            titleEl.innerText = title;
-            catEl.innerText = cat;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeModal() {
-            const modal = document.getElementById('projectModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'visible';
-        }
-        // Close modal with ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") closeModal();
-        });
-        // Click outside modal to close
-        document.getElementById('projectModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
